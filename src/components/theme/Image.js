@@ -41,7 +41,7 @@ export default class Image extends React.Component {
                     (this.state.showLoader) && (
                         <View style={styles.centerView}>
                             <ActivityIndicator
-                                size="small"
+                                size={this.props.loaderSize || "small"}
                             />
                         </View>
                     )

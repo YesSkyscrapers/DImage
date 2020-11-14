@@ -3,6 +3,9 @@ import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native'
 
 const DEFAULT_PRELOAD_OFFSET = 1000;
 
+
+export const SKIP_PAGE = 'SKIP_PAGE'
+
 export default class List extends React.PureComponent {
 
     constructor(props) {
@@ -43,12 +46,14 @@ export default class List extends React.PureComponent {
         })
     }
 
-    askForNewElements = () => {
-        if (this.isEndReached) {
-            return;
-        }
-        if (this.downloadLock) {
-            return;
+    askForNewElements = (isAgain = false) => {
+        if (!isAgain) {
+            if (this.isEndReached) {
+                return;
+            }
+            if (this.downloadLock) {
+                return;
+            }
         }
         this.downloadLock = true;
         this.setState({
@@ -60,17 +65,23 @@ export default class List extends React.PureComponent {
                 return;
             }
 
-            if (result.length == 0) {
-                this.isEndReached = true;
+            if (result == SKIP_PAGE) {
+                return this.askForNewElements(true);
+            } else {
+                if (result.length == 0) {
+                    this.isEndReached = true;
+                }
+
+                this.setState({
+                    isLoading: false,
+                    data: this.state.data.concat(result)
+                }, () => {
+                    if (this.props.onResult) {
+                        this.props.onResult(this.state.data)
+                    }
+                    this.downloadLock = false;
+                })
             }
-
-            this.setState({
-                isLoading: false,
-                data: this.state.data.concat(result)
-            }, () => {
-                this.downloadLock = false;
-            })
-
         })
     }
 
@@ -79,6 +90,10 @@ export default class List extends React.PureComponent {
         const contentHeight = event.nativeEvent.contentSize.height;
         if ((contentHeight - contentOffset) < (this.props.preloadOffset ? this.props.preloadOffset : DEFAULT_PRELOAD_OFFSET)) {
             this.askForNewElements();
+        }
+
+        if (this.props.onScroll) {
+            this.props.onScroll(event)
         }
     }
 
@@ -99,7 +114,7 @@ export default class List extends React.PureComponent {
                     ListFooterComponent={
                         <View >
                             {
-                                this.state.isLoading && (
+                                !this.props.disableLoader && this.state.isLoading && (
                                     <View style={styles.loaderContainer}>
                                         <ActivityIndicator size="large" />
                                     </View>

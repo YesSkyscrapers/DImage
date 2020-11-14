@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import { Router, Stack, Scene, Tab, Actions } from 'react-native-js-navigator'
 import SearchContainer from './components/screens/SearchScreen/SearchContainer'
-import LibraryContainer from './components/screens/LibraryScreen/LibraryContainer'
+import FeedContainer from './components/screens/FeedScreen/FeedContainer'
 import TabBar from './TabBar';
 import { faBookOpen, faSearch } from '@fortawesome/free-solid-svg-icons'
 import MangaContainer from './components/screens/MangaScreen/MangaContainer';
@@ -39,7 +39,7 @@ export default AppRouter = () => {
         <Router backAndroidHandler={backAndroidHandler}>
             <Tab TabComponent={<TabBar />}>
                 <Stack key="libraryTab" title="Библиотека" icon={faBookOpen} >
-                    <Scene key="library" component={LibraryContainer} />
+                    <Scene key="library" component={FeedContainer} />
                 </Stack>
                 {/* <Stack key="searchTab" title="Поиск" icon={faSearch}>
                     <Scene key="search" component={SearchContainer} />

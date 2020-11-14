@@ -11,6 +11,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import persistSessionReducer from './reducers/persistSessionReducer';
 import appReducer from './reducers/appReducer';
+import feedReducer from './reducers/feedReducer';
 
 const secureStorage = createSensitiveStorage({
     keychainService: "readerchanKeychain",
@@ -20,7 +21,7 @@ const secureStorage = createSensitiveStorage({
 const rootPersistConfig = {
     timeout: 0,
     key: 'root',
-    whitelist: ['persistSession'],
+    whitelist: ['persistSession', 'feed'],
     storage: AsyncStorage
 }
 
@@ -32,6 +33,7 @@ const securePersistConfig = {
 
 const rootReducer = combineReducers({
     app: appReducer,
+    feed: feedReducer,
     persistSession: persistSessionReducer,
     secure: persistReducer(securePersistConfig, secureReducer),
 });

@@ -70,7 +70,7 @@ class TabBar extends React.PureComponent {
                                     const isActive = activeTabKeyName == element.elementKey
                                     return (
                                         <Button style={styles.tabKeyContainer} key={element.elementKey} onPress={() => this.onKeyPress(element.elementKey, index)}>
-                                            <FontAwesomeIcon color={isActive ? colors.faIconBlue : colors.faIcon} size={28} icon={element.icon} style={styles.tabIcon} />
+                                            <FontAwesomeIcon color={isActive ? colors.white09 : colors.darkLayout9} size={28} icon={element.icon} style={styles.tabIcon} />
                                         </Button>
                                     )
                                 })
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         minHeight: 50,
         paddingTop: 1,
         borderTopWidth: 1,
-        borderColor: 'gray'
+        borderColor: colors.darkLayout9,
     },
     tabTitle: {
         fontSize: 15
@@ -151,6 +151,6 @@ const styles = StyleSheet.create({
         bottom: 0
     },
     hidingStub: {
-        backgroundColor: 'white'
+        backgroundColor: colors.black
     }
 })

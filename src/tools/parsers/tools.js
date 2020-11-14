@@ -1,5 +1,7 @@
+import { proxyableFetch } from '../fetch'
+
 export const getHtmlFromUrl = (url) => {
-    return fetch(encodeURI(url)).then(response => {
+    return proxyableFetch(encodeURI(url)).then(response => {
         return response.text();
     })
 }
