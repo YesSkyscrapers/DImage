@@ -5,9 +5,10 @@ import danbooruParser from '../../tools/parsers/danbooruParser'
 import { getHtmlFromUrl } from '../../tools/parsers/tools'
 import { load_feed_page, see_url } from '../actionCreators/feedActionCreators'
 import { SKIP_PAGE } from '../../components/theme/List'
+import { getWaitPromise } from '../../tools/tools'
 
 const getFeedDate = (usePrevDay = false) => {
-    return moment().add(usePrevDay ? -1 : 0, "days").format('YYYY-MM-DD');
+    return moment().add(usePrevDay ? -2 : -1, "days").format('YYYY-MM-DD');
 }
 
 
@@ -23,6 +24,9 @@ export const seeImage = (url) => {
             }
         } else {
             console.log('smth wrong, saw non existing image')
+            return getWaitPromise(1000).then(() => {
+                return seeImage(url)
+            })
         }
 
     }

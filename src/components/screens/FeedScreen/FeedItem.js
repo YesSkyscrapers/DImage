@@ -16,15 +16,23 @@ class FeedItem extends React.PureComponent {
             postInfo: undefined,
             isLoading: true,
         }
+
+        this.cancelLoad = false;
     }
 
     componentDidMount() {
         this.props.loadFeedPost(this.state.postUrl).then(postInfo => {
+            if (this.cancelLoad) {
+                return;
+            }
             if (postInfo) {
                 this.setState({
                     postInfo
                 }, () => {
                     preload(postInfo.imageUrl).then((result) => {
+                        if (this.cancelLoad) {
+                            return;
+                        }
                         this.setState({
                             isLoading: !result
                         })
@@ -34,6 +42,10 @@ class FeedItem extends React.PureComponent {
                 console.log('smth error, pls catch it')
             }
         })
+    }
+
+    componentWillUnmount() {
+        this.cancelLoad = true
     }
 
     render() {

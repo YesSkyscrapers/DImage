@@ -1,4 +1,6 @@
 import { parse as HTMLParse } from 'node-html-parser';
+import Clipboard from '@react-native-community/clipboard';
+
 
 let parser = {
 
@@ -33,6 +35,10 @@ parser.getPostInfo = (html, url) => {
 
         const imageContainer = root.querySelector('.image-container')
         const pictureContainer = imageContainer.querySelector('picture')
+        if (!pictureContainer) {
+            console.log("cant get image", url)
+            Clipboard.setString(url);
+        }
         //console.log(imageContainer.querySelector('picture'), `imageContainer.querySelector('picture')`, url)
         const imgContainer = pictureContainer.querySelector('img')
         postInfo.imageUrl = imgContainer.getAttribute('src')

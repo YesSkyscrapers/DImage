@@ -15,14 +15,20 @@ import FeedItem from './FeedItem'
 import List from '../../theme/List';
 import FeedStubItem from './FeedStubItem';
 
-const MAX_PRELOAD_IMAGES_COUNT = 10;
-const MIN_PRELOAD_IMAGES_COUNT = 3;
+const MAX_PRELOAD_IMAGES_COUNT = 5;
+const MIN_PRELOAD_IMAGES_COUNT = 1;
 const UNLOAD_IMAGES_COUNT = 5;
 
 const checkIfImageShow = (index, currentPage) => {
     let maxIndex = MIN_PRELOAD_IMAGES_COUNT + currentPage;
     maxIndex = maxIndex > MAX_PRELOAD_IMAGES_COUNT ? MAX_PRELOAD_IMAGES_COUNT : maxIndex
-    return ((index < currentPage + maxIndex) && (index >= currentPage - UNLOAD_IMAGES_COUNT))
+    let minIndex = currentPage - UNLOAD_IMAGES_COUNT
+    maxIndex = currentPage + maxIndex
+    var list = [];
+    for (var i = minIndex; i <= maxIndex; i++) {
+        list.push(i);
+    }
+    return list.includes(index)
 }
 
 const CenteredLoader = () => {
@@ -54,6 +60,7 @@ export default FeedComponent = ({
                 ) :
                     (
                         <List
+                            disableIntervalMomentum={true}
                             disableLoader
                             scrollEventThrottle={32}
                             onScroll={onFeedScroll}

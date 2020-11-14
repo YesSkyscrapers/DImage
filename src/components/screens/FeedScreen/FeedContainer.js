@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 import { Dimensions } from 'react-native';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
+import { SKIP_PAGE } from '../../theme/List';
 
 class FeedContainer extends React.PureComponent {
 
@@ -21,6 +22,7 @@ class FeedContainer extends React.PureComponent {
     screenHeight = Dimensions.get("screen").height
     usePrevDay = false
     listData = []
+    listLoadedData = [];
     isFirstResultLoad = true;
 
     componentDidMount() {
@@ -41,14 +43,22 @@ class FeedContainer extends React.PureComponent {
                 this.usePrevDay = true;
                 return this.getNewListElements(page)
             } else {
+                if (images != SKIP_PAGE) {
+                    this.listLoadedData = this.listLoadedData.concat(images)
+                    if (images.length == 0 && this.listLoadedData.length == 0) {
+                        this.usePrevDay = true;
+                        return this.getNewListElements(page)
+                    }
+                }
                 return images
             }
         })
     }
 
+
     onFeedScroll = (event) => {
         const offset = event.nativeEvent.contentOffset.y;
-        const currentPage = (offset - offset % this.screenHeight) / this.screenHeight;
+        const currentPage = Math.round((offset - offset % this.screenHeight) / this.screenHeight);
         if (this.state.currentPage != currentPage) {
             this.setState({
                 currentPage
@@ -77,8 +87,10 @@ class FeedContainer extends React.PureComponent {
                 this.setState({
                     isRefreshing: false,
                     feedListIdentifier: ++this.state.feedListIdentifier,
+                    currentPage: 0
                 })
                 this.isFirstResultLoad = true
+                this.listLoadedData = []
             }, 100)
         })
     }
