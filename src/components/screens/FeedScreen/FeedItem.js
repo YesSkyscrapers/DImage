@@ -29,6 +29,9 @@ class FeedItem extends React.PureComponent {
                 this.setState({
                     postInfo
                 }, () => {
+                    if (this.props.onCompleteUrlReceived) {
+                        this.props.onCompleteUrlReceived(postInfo.imageUrl)
+                    }
                     preload(postInfo.imageUrl).then((result) => {
                         if (this.cancelLoad) {
                             return;

@@ -6,15 +6,20 @@ let parser = {
 
 }
 
+const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'jfif', 'pjpeg', 'pjp']
+
 parser.getImagesFromPopularPage = (html) => {
     return new Promise(resolve => {
         const root = HTMLParse(html);
 
-        const linkContainers = root.querySelectorAll('a').map(element => ({
-            element,
-            link: element.getAttribute('href'),
-        }))
-        const imageContainers = linkContainers.filter(linkInfo => linkInfo.element.querySelector('picture'))
+        const linkContainers = root.querySelectorAll('a').map(element => {
+            return ({
+                element,
+                link: element.getAttribute('href'),
+                ext: element.parentNode.getAttribute('data-file-ext')
+            })
+        })
+        const imageContainers = linkContainers.filter(linkInfo => ALLOWED_EXTENSIONS.includes(linkInfo.ext) && linkInfo.element.querySelector('picture'))
         const imagesTagContainers = imageContainers.map(linkInfo => ({
             ...linkInfo,
             element: linkInfo.element.querySelector('img')

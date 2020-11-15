@@ -1,6 +1,6 @@
 import React from 'react';
 import FeedComponent from './FeedComponent';
-import { preload, changeFetchFunc } from 'react-native-cache-control-image'
+import { preload, changeFetchFunc, saveFile } from 'react-native-cache-control-image'
 import RNFetchBlob from 'rn-fetch-blob';
 import { initFeed, loadFeed, seeImage } from '../../../store/actions/feedActions'
 import { checkProxy } from '../../../store/actions/appActions';
@@ -16,7 +16,8 @@ class FeedContainer extends React.PureComponent {
         currentPage: 0,
         isLoading: true,
         feedListIdentifier: 1,
-        isRefreshing: false
+        isRefreshing: false,
+        showButtons: true
     }
 
     screenHeight = Dimensions.get("screen").height
@@ -32,8 +33,15 @@ class FeedContainer extends React.PureComponent {
 
         //чтобы показать что он вообще то есть...
         setTimeout(() => {
-            this.props.toggleTabBar(false)
+            this.toggleUI(false)
         }, 500)
+    }
+
+    toggleUI = state => {
+        this.props.toggleTabBar(state)
+        this.setState({
+            showButtons: state == undefined ? !this.state.showButtons : state
+        })
     }
 
     getNewListElements = (page) => {
@@ -68,7 +76,7 @@ class FeedContainer extends React.PureComponent {
     }
 
     onScreenTap = () => {
-        this.props.toggleTabBar()
+        this.toggleUI()
     }
 
     onResult = data => {
@@ -95,6 +103,10 @@ class FeedContainer extends React.PureComponent {
         })
     }
 
+    onDownloadPress = (url) => {
+        saveFile(url)
+    }
+
     render() {
         return (
             <FeedComponent
@@ -107,6 +119,8 @@ class FeedContainer extends React.PureComponent {
                 onRefresh={this.onRefresh}
                 feedListIdentifier={this.state.feedListIdentifier}
                 isRefreshing={this.state.isRefreshing}
+                onDownloadPress={this.onDownloadPress}
+                showButtons={this.state.showButtons}
             />
         )
     }

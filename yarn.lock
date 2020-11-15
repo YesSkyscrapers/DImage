@@ -5668,7 +5668,7 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-i
 
 "react-native-cache-control-image@https://github.com/YesSkyscrapers/react-native-cache-control-image":
   version "1.0.0"
-  resolved "https://github.com/YesSkyscrapers/react-native-cache-control-image#dc1ecc8023149aea39463d3ca1a094e1a368ea78"
+  resolved "https://github.com/YesSkyscrapers/react-native-cache-control-image#2149b58223d36f66c4b2604a3a8e777963455b24"
 
 react-native-create-guid@^1.1.0:
   version "1.1.0"

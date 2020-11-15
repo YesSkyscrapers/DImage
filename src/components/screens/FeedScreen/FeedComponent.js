@@ -14,6 +14,7 @@ import colors from '../../theme/colors';
 import FeedItem from './FeedItem'
 import List from '../../theme/List';
 import FeedStubItem from './FeedStubItem';
+import FeedItemContainer from './FeedItemContainer';
 
 const MAX_PRELOAD_IMAGES_COUNT = 3;
 const MIN_PRELOAD_IMAGES_COUNT = 1;
@@ -49,6 +50,8 @@ export default FeedComponent = ({
     onRefresh,
     feedListIdentifier,
     isRefreshing,
+    onDownloadPress,
+    showButtons,
 }) => {
 
 
@@ -74,9 +77,11 @@ export default FeedComponent = ({
                             decelerationRate={"fast"}
                             snapToInterval={Dimensions.get('screen').height}
                             renderItem={({ item, index }) => (
-                                <Button
-                                    activeOpacity={1}
+                                <FeedItemContainer
+                                    item={item}
                                     onPress={onScreenTap}
+                                    onDownloadPress={onDownloadPress}
+                                    showButtons={showButtons}
                                 >
                                     {
                                         checkIfImageShow(index, currentPage) ? (
@@ -91,7 +96,7 @@ export default FeedComponent = ({
                                                 />
                                             )
                                     }
-                                </Button>
+                                </FeedItemContainer>
                             )}
                             refreshControl={
                                 <RefreshControl
