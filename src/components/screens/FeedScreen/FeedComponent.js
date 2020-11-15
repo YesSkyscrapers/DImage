@@ -15,9 +15,9 @@ import FeedItem from './FeedItem'
 import List from '../../theme/List';
 import FeedStubItem from './FeedStubItem';
 
-const MAX_PRELOAD_IMAGES_COUNT = 5;
+const MAX_PRELOAD_IMAGES_COUNT = 3;
 const MIN_PRELOAD_IMAGES_COUNT = 1;
-const UNLOAD_IMAGES_COUNT = 5;
+const UNLOAD_IMAGES_COUNT = 3;
 
 const checkIfImageShow = (index, currentPage) => {
     let maxIndex = MIN_PRELOAD_IMAGES_COUNT + currentPage;
