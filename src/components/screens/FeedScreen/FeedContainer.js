@@ -9,6 +9,7 @@ import moment from 'moment'
 import { Dimensions } from 'react-native';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
 import { SKIP_PAGE } from '../../theme/List';
+import { onAddHistoryChangeListener } from 'react-native-js-navigator'
 
 class FeedContainer extends React.PureComponent {
 
@@ -25,16 +26,19 @@ class FeedContainer extends React.PureComponent {
     listData = []
     listLoadedData = [];
     isFirstResultLoad = true;
+    screenChanged = false
 
     componentDidMount() {
-        this.props.checkProxy().then(() => {
-            this.setState({ isLoading: false })
-        })
+        // onAddHistoryChangeListener(this.onNavigatorHistoryChange)
 
-        //чтобы показать что он вообще то есть...
+        this.setState({ isLoading: false })
         setTimeout(() => {
             this.toggleUI(false)
-        }, 500)
+        }, 1000)
+    }
+
+    onNavigatorHistoryChange = (changeInfo) => {
+        this.screenChanged = true;
     }
 
     toggleUI = state => {

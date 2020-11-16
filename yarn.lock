@@ -5673,7 +5673,7 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-i
 
 "react-native-cache-control-image@https://github.com/YesSkyscrapers/react-native-cache-control-image":
   version "1.0.0"
-  resolved "https://github.com/YesSkyscrapers/react-native-cache-control-image#cd16ea7ee5ea04965ae33d909677203f32c0ce88"
+  resolved "https://github.com/YesSkyscrapers/react-native-cache-control-image#a551e4ee175c99b9cb55c14cd2ca512c7baae92c"
 
 react-native-create-guid@^1.1.0:
   version "1.1.0"
@@ -5682,7 +5682,7 @@ react-native-create-guid@^1.1.0:
 
 "react-native-js-navigator@https://github.com/YesSkyscrapers/react-native-js-navigator":
   version "1.0.0"
-  resolved "https://github.com/YesSkyscrapers/react-native-js-navigator#ad6f72c2d34754f4e5aa56d982b084551700fbb2"
+  resolved "https://github.com/YesSkyscrapers/react-native-js-navigator#7375c3f1cd7682ca65cbc1e58f89fb27b245b349"
 
 "react-native-js-popup@https://github.com/YesSkyscrapers/react-native-js-popup":
   version "1.0.0"
