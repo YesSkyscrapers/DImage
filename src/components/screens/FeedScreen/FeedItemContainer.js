@@ -7,7 +7,9 @@ import Image from '../../theme/Image';
 import colors from '../../theme/colors';
 import Button from '../../theme/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCheck, faCheckCircle, faCheckSquare, faClipboardCheck, faCloudDownloadAlt, faDownload, faFileDownload, faSpellCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faHeart, faCheckSquare, faClipboardCheck, faCloudDownloadAlt, faDownload, faFileDownload, faSpellCheck } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
+import { unlike_post, like_post } from '../../../store/actionCreators/feedActionCreators';
 
 const ANIMATION_MAX = 200;
 
@@ -51,6 +53,24 @@ class FeedItemContainer extends React.PureComponent {
         this.completeUrl = url
     }
 
+    like = () => {
+        if (!this.completeUrl) {
+            setTimeout(() => {
+                this.like()
+            }, 1000)
+            return;
+        }
+        const likeObject = {
+            postUrl: this.props.item,
+            imageUrl: this.completeUrl
+        }
+        if (this.props.likedPost.includes(this.completeUrl)) {
+            this.props.unlike(likeObject)
+        } else {
+            this.props.like(likeObject)
+        }
+    }
+
 
     render() {
         return (
@@ -74,12 +94,10 @@ class FeedItemContainer extends React.PureComponent {
                     }
                 ]}>
                     <View style={styles.buttonBackground} />
-                    {/* <Button style={styles.buttonContainer} onPress={this.onDownloadPress}>
-
-                        <FontAwesomeIcon icon={fa} size={30} color={colors.white} />
-                    </Button> */}
+                    <Button style={styles.buttonContainer} onPress={this.like}>
+                        <FontAwesomeIcon icon={this.props.likedPost.includes(this.completeUrl) ? faHeart : faEmptyHeart} size={30} color={colors.white} />
+                    </Button>
                     <Button style={styles.buttonContainer} onPress={this.onDownloadPress}>
-
                         <FontAwesomeIcon icon={this.state.saved ? faCheck : faCloudDownloadAlt} size={this.state.saved ? 25 : 30} color={colors.white} />
                     </Button>
                 </Animated.View>
@@ -90,12 +108,15 @@ class FeedItemContainer extends React.PureComponent {
 
 const mapStateToProps = state => {
     return {
+        likedPost: state.feed.likedPost.map(post => post.imageUrl) || []
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         loadFeedPost: (url) => dispatch(loadFeedPost(url)),
+        like: (url) => dispatch(like_post(url)),
+        unlike: (url) => dispatch(unlike_post(url)),
     };
 };
 
