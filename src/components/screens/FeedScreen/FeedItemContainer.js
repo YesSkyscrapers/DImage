@@ -7,7 +7,7 @@ import Image from '../../theme/Image';
 import colors from '../../theme/colors';
 import Button from '../../theme/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCheckCircle, faCheckSquare, faClipboardCheck, faCloudDownloadAlt, faDownload, faFileDownload, faSpellCheck } from '@fortawesome/free-solid-svg-icons';
 
 const ANIMATION_MAX = 200;
 
@@ -17,6 +17,7 @@ class FeedItemContainer extends React.PureComponent {
         super(props)
 
         this.state = {
+            saved: false,
             showButtons: new Animated.Value(props.showButtons ? 0 : ANIMATION_MAX)
         }
 
@@ -39,7 +40,11 @@ class FeedItemContainer extends React.PureComponent {
     }
 
     onDownloadPress = () => {
-        this.props.onDownloadPress(this.completeUrl ? this.completeUrl : this.props.item)
+        this.props.onDownloadPress(this.completeUrl ? this.completeUrl : this.props.item).then(() => {
+            this.setState({
+                saved: true
+            })
+        })
     }
 
     onCompleteUrlReceived = url => {
@@ -68,8 +73,14 @@ class FeedItemContainer extends React.PureComponent {
                         }]
                     }
                 ]}>
+                    <View style={styles.buttonBackground} />
+                    {/* <Button style={styles.buttonContainer} onPress={this.onDownloadPress}>
+
+                        <FontAwesomeIcon icon={fa} size={30} color={colors.white} />
+                    </Button> */}
                     <Button style={styles.buttonContainer} onPress={this.onDownloadPress}>
-                        <FontAwesomeIcon icon={faDownload} size={30} color={colors.white09} />
+
+                        <FontAwesomeIcon icon={this.state.saved ? faCheck : faCloudDownloadAlt} size={this.state.saved ? 25 : 30} color={colors.white} />
                     </Button>
                 </Animated.View>
             </Button>
@@ -103,13 +114,27 @@ const styles = StyleSheet.create({
     absoluteButtons: {
         position: 'absolute',
         right: 0,
-        bottom: Dimensions.get('screen').height * 0.33
+        bottom: Dimensions.get('screen').height * 0.44
     },
     buttonContainer: {
-        width: Dimensions.get('screen').height * 0.07,
+        width: Dimensions.get('screen').height * 0.07 + 5,
         height: Dimensions.get('screen').height * 0.07,
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 10
+        paddingLeft: 5
+    },
+    buttonBackground: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(33,33,33,0.7)',
+        position: 'absolute',
+        borderTopLeftRadius: Dimensions.get('screen').height * 0.035,
+        borderBottomLeftRadius: Dimensions.get('screen').height * 0.035,
+        borderWidth: 1,
+        borderColor: colors.darkLayout9,
+        borderRightWidth: 0,
+        paddingLeft: 5
     }
 })

@@ -104,7 +104,7 @@ class FeedContainer extends React.PureComponent {
     }
 
     onDownloadPress = (url) => {
-        saveFile(url)
+        return saveFile(url)
     }
 
     render() {

@@ -242,6 +242,8 @@ PODS:
     - React
   - react-native-cache-control-image (1.0.0):
     - React
+  - react-native-cameraroll (1.4.0):
+    - React
   - react-native-create-guid (1.1.0):
     - React
   - react-native-js-navigator (1.0.0):
@@ -364,6 +366,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-cache-control-image (from `../node_modules/react-native-cache-control-image`)
+  - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-create-guid (from `../node_modules/react-native-create-guid`)
   - react-native-js-navigator (from `../node_modules/react-native-js-navigator`)
   - react-native-js-popup (from `../node_modules/react-native-js-popup`)
@@ -437,6 +440,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/blur"
   react-native-cache-control-image:
     :path: "../node_modules/react-native-cache-control-image"
+  react-native-cameraroll:
+    :path: "../node_modules/@react-native-community/cameraroll"
   react-native-create-guid:
     :path: "../node_modules/react-native-create-guid"
   react-native-js-navigator:
@@ -508,6 +513,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-cache-control-image: a60e17633ca162c131eea149efa8ae905f62d57e
+  react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
   react-native-create-guid: 0600aeff2fa8684fae253a80779bbbc3dfd31b69
   react-native-js-navigator: 8aefdeca38f25595097fcc0a8d9a54f88e7a033c
   react-native-js-popup: b6931f14e82d4fff22c32adf1b2b8025ca15bc48

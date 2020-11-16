@@ -41,6 +41,10 @@
 	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Для установки фото</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Для добавления фото</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

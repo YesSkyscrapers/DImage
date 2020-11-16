@@ -1037,6 +1037,11 @@
   dependencies:
     prop-types "^15.5.10"
 
+"@react-native-community/cameraroll@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cameraroll/-/cameraroll-1.4.0.tgz#efac4dffc058bfe34a565e0172d1a5205ac7d1c4"
+  integrity sha512-JU/xisFe1SXvhWsbMIZzEgnJn1X4Ik24KirZJfFiljHub6bfQJoAPNq7xqbShzm62IFIFwpJ30+JGHNhjB/IrQ==
+
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.9.0.tgz#4177764ba69243c97aa26829d59d9501acb2bd71"
@@ -5668,7 +5673,7 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-i
 
 "react-native-cache-control-image@https://github.com/YesSkyscrapers/react-native-cache-control-image":
   version "1.0.0"
-  resolved "https://github.com/YesSkyscrapers/react-native-cache-control-image#2149b58223d36f66c4b2604a3a8e777963455b24"
+  resolved "https://github.com/YesSkyscrapers/react-native-cache-control-image#cd16ea7ee5ea04965ae33d909677203f32c0ce88"
 
 react-native-create-guid@^1.1.0:
   version "1.1.0"
