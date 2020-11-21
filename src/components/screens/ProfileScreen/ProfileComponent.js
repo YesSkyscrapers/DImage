@@ -8,38 +8,35 @@ import {
     ActivityIndicator,
     Dimensions,
     RefreshControl,
-    ScrollView
+    ScrollView,
+    Animated,
+    FlatList,
 } from 'react-native';
 import Button from '../../theme/Button';
 import colors from '../../theme/colors';
 import Image from '../../theme/Image';
 import SafeArea from '../../theme/SafeArea';
+import HeaderImage from '../../../assets/profile/header.png'
 
-const avatar_urls = [
-    'https://danbooru.donmai.us/data/__okunoda_miyoi_touhou_drawn_by_chamaji__9934fbbc9a4a46d049bb08828fd7be8e.jpg',
-    'https://danbooru.donmai.us/data/__maribel_hearn_touhou_drawn_by_chamaji__d268417596feca3734b498acf8006410.jpg',
-    'https://danbooru.donmai.us/data/__usami_renko_touhou_drawn_by_chamaji__d9e2cbe39d6096a9ee67aed7864b410f.jpg',
-    'https://danbooru.donmai.us/data/__haniyasushin_keiki_touhou_drawn_by_chamaji__59b375174d7b98d7a4ca07d44fde1e9e.jpg',
-    'https://danbooru.donmai.us/data/__joutouguu_mayumi_touhou_drawn_by_chamaji__087bdd793f9e1458f937b4f16a08308b.jpg',
-    'https://danbooru.donmai.us/data/__kurokoma_saki_touhou_drawn_by_chamaji__0e8814e8a035ef39174aeefbfae6ac5f.jpg',
-    'https://danbooru.donmai.us/data/__kicchou_yachie_touhou_drawn_by_chamaji__80b15b72cf5845ceaaf02e90bbd54b09.jpg',
-    'https://danbooru.donmai.us/data/__niwatari_kutaka_touhou_drawn_by_chamaji__2dea4ab9036b3228323a39e07f2073e7.jpg',
-    'https://danbooru.donmai.us/data/__ushizaki_urumi_touhou_drawn_by_chamaji__5b104d88ee98b9dc26768a5ad81aa3e9.jpg',
-    'https://danbooru.donmai.us/data/__yorigami_shion_touhou_drawn_by_chamaji__abd0f433da11dc6ff2eea675a52e5817.jpg',
-    'https://danbooru.donmai.us/data/__matara_okina_touhou_drawn_by_chamaji__70d6f13498d75221a78a4a6b7c65d65c.jpg',
-    'https://danbooru.donmai.us/data/__yatadera_narumi_touhou_drawn_by_chamaji__989d4b3d6f51563f5c3556083aeabd38.jpg',
-    'https://danbooru.donmai.us/data/__sakata_nemuno_touhou_drawn_by_chamaji__d479f880faf41cdc1a038a248256f5cb.jpg',
-]
-
-const getRandomAvatar = () => {
-    return avatar_urls[Math.floor(Math.random() * avatar_urls.length)]
-}
+const HEADER_PROPORTION = 450 / 150;
+const IMAGE_PROPORTION = 150 / 225;
 
 export default ProfileComponent = ({
-
+    headerOffset,
+    screenWidth,
+    likedImages,
+    processPreloadedPosts,
 }) => {
 
-    const avatar = getRandomAvatar()
+    const headerSizeStyle = {
+        width: Dimensions.get('screen').width,
+        height: Dimensions.get('screen').width / HEADER_PROPORTION,
+    }
+
+    const imageSizeStyle = {
+        width: (Dimensions.get('screen').width - 11) / 2,
+        height: ((Dimensions.get('screen').width - 11) / 2) / IMAGE_PROPORTION,
+    }
 
     return (
         <SafeArea safeStyle={styles.flexContainer}>
@@ -48,12 +45,92 @@ export default ProfileComponent = ({
                     <FontAwesomeIcon icon={faSlidersH} size={25} color={colors.white} />
                 </Button>
             </View>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <View style={styles.avatarContainer}>
-                    <Image
-                        url={avatar}
-                        style={styles.avatar}
-                        resizeMode="contain"
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.scrollContainer}
+            >
+                <View style={[styles.animatedHeaderContainer, {
+                    ...headerSizeStyle
+                }]}>
+                    <Animated.View style={[styles.animatedHeader, {
+                        ...headerSizeStyle,
+                        transform: [{
+                            translateX: Animated.add(headerOffset, new Animated.Value(-screenWidth))
+                        }]
+                    }]}>
+                        <Image
+                            source={HeaderImage}
+                            style={headerSizeStyle}
+                            resizeMode="contain"
+                        />
+                    </Animated.View>
+
+                    <Animated.View style={[styles.animatedHeader, {
+                        ...headerSizeStyle,
+                        transform: [{
+                            translateX: Animated.add(headerOffset, new Animated.Value(0))
+                        }]
+                    }]}>
+                        <Image
+                            source={HeaderImage}
+                            style={headerSizeStyle}
+                            resizeMode="contain"
+                        />
+                    </Animated.View>
+                </View>
+                <View style={styles.metricsContainers}>
+                    <View style={styles.metricsContainer}>
+                        <Text style={styles.metricTitle}>Лайки</Text>
+                        <Text style={styles.metric}>{likedImages.length}</Text>
+                    </View>
+                    <View style={styles.metricsContainer}>
+                        <Text style={styles.metricTitle}>Скачивания</Text>
+                        <Text style={styles.metric}>0</Text>
+                    </View>
+                </View>
+                <View style={styles.likedBlockTitleContainer} />
+                <View>
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        data={likedImages}
+                        contentContainerStyle={[styles.likedImagesScrollContainer]}
+                        keyExtractor={(item) => item.postUrl}
+                        numColumns={2}
+                        horizontal={false}
+                        renderItem={({ item, index }) => (
+                            processPreloadedPosts.includes(item.imageUrl) ? (
+                                <Image
+                                    url={item.imageUrl}
+                                    style={{
+                                        ...styles.imageItem,
+                                        ...imageSizeStyle,
+                                        ...(
+                                            index % 2 == 1 ? {
+                                                marginLeft: 3
+                                            } : {
+                                                }
+                                        )
+                                    }}
+                                />
+                            ) : (
+                                    <View
+                                        style={{
+                                            ...styles.imageItem,
+                                            ...imageSizeStyle,
+                                            ...(
+                                                index % 2 == 1 ? {
+                                                    marginLeft: 3
+                                                } : {
+                                                    }
+                                            )
+                                        }}
+                                    >
+                                        <ActivityIndicator
+                                            size={'small'}
+                                        />
+                                    </View>
+                                )
+                        )}
                     />
                 </View>
             </ScrollView>
@@ -68,18 +145,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.black,
     },
-    avatarContainer: {
-        width: Dimensions.get('screen').width * 0.5,
-        height: Dimensions.get('screen').width * 0.5,
-        borderRadius: Dimensions.get('screen').width * 0.5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        alignSelf: 'center'
-    },
     avatar: {
-        width: Dimensions.get('screen').width * 0.5,
-        height: Dimensions.get('screen').width * 0.5,
+        flex: 1,
     },
     buttonsContainer: {
         flexDirection: 'row',
@@ -96,5 +163,54 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         paddingTop: 50
+    },
+    animatedHeaderContainer: {
+        flexDirection: 'row',
+    },
+    animatedHeader: {
+        position: 'absolute'
+    },
+    metricsContainers: {
+        flexDirection: 'row',
+        marginTop: 25
+    },
+    metricsContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    metricTitle: {
+        fontWeight: 'bold',
+        color: colors.white,
+        fontSize: 15
+    },
+    metric: {
+        fontWeight: '600',
+        color: colors.white,
+        fontSize: 22,
+        marginTop: 10
+    },
+    likedBlockTitleContainer: {
+        borderBottomWidth: 1,
+        borderColor: colors.darkLayout9,
+        marginTop: 30,
+    },
+    likedBlockTitle: {
+        fontWeight: 'bold',
+        color: colors.white,
+        fontSize: 24
+    },
+    imageItem: {
+        borderColor: colors.darkLayout4,
+        borderWidth: 1,
+        borderRadius: 10,
+        marginBottom: 5,
+        overflow: 'hidden',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    likedImagesScrollContainer: {
+        paddingVertical: 20,
+        paddingHorizontal: 4
     }
 })

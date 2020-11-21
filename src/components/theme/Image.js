@@ -11,7 +11,7 @@ export default class Image extends React.Component {
         super(props);
 
         this.state = {
-            showLoader: true,
+            showLoader: !!this.props.url,
         }
     }
 
@@ -32,6 +32,9 @@ export default class Image extends React.Component {
         return (
             <View style={this.props.style}>
                 <NewImage
+                    {
+                    ...this.props
+                    }
                     style={this.props.style}
                     url={this.props.url}
                     resizeMode={this.props.resizeMode}
