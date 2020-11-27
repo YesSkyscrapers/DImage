@@ -26,6 +26,7 @@ export default ProfileComponent = ({
     screenWidth,
     likedImages,
     processPreloadedPosts,
+    onLikedImagePress,
 }) => {
 
     const headerSizeStyle = {
@@ -98,38 +99,44 @@ export default ProfileComponent = ({
                         numColumns={2}
                         horizontal={false}
                         renderItem={({ item, index }) => (
-                            processPreloadedPosts.includes(item.imageUrl) ? (
-                                <Image
-                                    url={item.imageUrl}
-                                    style={{
-                                        ...styles.imageItem,
-                                        ...imageSizeStyle,
-                                        ...(
-                                            index % 2 == 1 ? {
-                                                marginLeft: 3
-                                            } : {
-                                                }
-                                        )
-                                    }}
-                                />
-                            ) : (
-                                    <View
-                                        style={{
-                                            ...styles.imageItem,
-                                            ...imageSizeStyle,
-                                            ...(
-                                                index % 2 == 1 ? {
-                                                    marginLeft: 3
-                                                } : {
-                                                    }
+                            <Button onPress={() => onLikedImagePress(item, index, likedImages)}>
+                                {
+                                    (
+                                        processPreloadedPosts.includes(item.imageUrl) ? (
+                                            <Image
+                                                url={item.imageUrl}
+                                                style={{
+                                                    ...styles.imageItem,
+                                                    ...imageSizeStyle,
+                                                    ...(
+                                                        index % 2 == 1 ? {
+                                                            marginLeft: 3
+                                                        } : {
+                                                            }
+                                                    )
+                                                }}
+                                            />
+                                        ) : (
+                                                <View
+                                                    style={{
+                                                        ...styles.imageItem,
+                                                        ...imageSizeStyle,
+                                                        ...(
+                                                            index % 2 == 1 ? {
+                                                                marginLeft: 3
+                                                            } : {
+                                                                }
+                                                        )
+                                                    }}
+                                                >
+                                                    <ActivityIndicator
+                                                        size={'small'}
+                                                    />
+                                                </View>
                                             )
-                                        }}
-                                    >
-                                        <ActivityIndicator
-                                            size={'small'}
-                                        />
-                                    </View>
-                                )
+                                    )
+                                }
+                            </Button>
                         )}
                     />
                 </View>

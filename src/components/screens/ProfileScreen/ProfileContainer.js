@@ -3,9 +3,10 @@ import ProfileComponent from './ProfileComponent';
 import { connect } from 'react-redux';
 import moment from 'moment'
 import { Animated, Dimensions } from 'react-native';
-import { onAddHistoryChangeListener } from 'react-native-js-navigator'
+import { Actions, onAddHistoryChangeListener } from 'react-native-js-navigator'
 import { getWaitPromise } from '../../../tools/tools'
 import { preload } from 'react-native-cache-control-image';
+import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
 
 class ProfileContainer extends React.PureComponent {
 
@@ -86,6 +87,15 @@ class ProfileContainer extends React.PureComponent {
         ).start()
     }
 
+    onLikedImagePress = (item, index, array) => {
+        this.props.toggleTabBar(false)
+        Actions.push("feedV2", {
+            images: array,
+            initialIndex: index,
+            showButtons: false
+        })
+    }
+
     render() {
         return (
             <ProfileComponent
@@ -93,6 +103,7 @@ class ProfileContainer extends React.PureComponent {
                 screenWidth={this.screenWidth}
                 likedImages={this.props.likedImages}
                 processPreloadedPosts={this.state.processPreloadedPosts}
+                onLikedImagePress={this.onLikedImagePress}
             />
         )
     }
@@ -106,6 +117,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        toggleTabBar: (state) => dispatch(toggle_tabbar_visibility(state)),
     };
 };
 

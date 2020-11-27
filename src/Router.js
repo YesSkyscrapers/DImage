@@ -26,6 +26,7 @@ import MangaReaderContainer from './components/screens/MangaReaderScreen/MangaRe
 import NewMangaReaderComponent from './components/screens/NewMangaReaderScreen/NewMangaReaderComponent';
 import ProfileContainer from './components/screens/ProfileScreen/ProfileContainer';
 import LoadingContainer from './components/screens/LoadingScreen/LoadingContainer';
+import FeedV2Container from './components/screens/FeedV2Screen/FeedV2Container';
 
 
 const backAndroidHandler = () => {
@@ -47,6 +48,7 @@ export default AppRouter = () => {
                     </Stack>
                     <Stack key="profileTab" title="Профиль" icon={faUserAlt} >
                         <Scene key="profile" component={ProfileContainer} />
+                        <Scene key="feedV2" component={FeedV2Container} />
                     </Stack>
                     {/* <Stack key="searchTab" title="Поиск" icon={faSearch}>
                     <Scene key="search" component={SearchContainer} />

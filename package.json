@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint .",
     "update": "yarn install && cd ios && pod install && cd ../",
-    "updateLib": "yarn add https://github.com/YesSkyscrapers/react-native-cache-control-image"
+    "updateLib": "yarn add https://github.com/YesSkyscrapers/react-native-cache-control-image",
+    "addScreen": "node scripts/addScreen"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
