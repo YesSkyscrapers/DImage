@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>350882723041-b6r7t7jkrmg1lkfreibocck8s27heeuo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.350882723041-b6r7t7jkrmg1lkfreibocck8s27heeuo</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>350882723041-91i44eirbov6v55t4q3f2lnu3k4fl2ub.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBVkKaV6aw0cDsdCRAu-1QiJdiszMB6MY0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>350882723041</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.yesskyscrapers.dimage</string>
+	<key>PROJECT_ID</key>
+	<string>dimage-4e2af</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dimage-4e2af.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:350882723041:ios:51333d39cf48d84c3973a0</string>
+	<key>DATABASE_URL</key>
+	<string>https://dimage-4e2af.firebaseio.com</string>
+</dict>
+</plist>

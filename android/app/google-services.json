@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "350882723041",
+    "firebase_url": "https://dimage-4e2af.firebaseio.com",
+    "project_id": "dimage-4e2af",
+    "storage_bucket": "dimage-4e2af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350882723041:android:a09d29032c1f394a3973a0",
+        "android_client_info": {
+          "package_name": "com.yesskyscrapers.dimage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350882723041-91i44eirbov6v55t4q3f2lnu3k4fl2ub.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yesskyscrapers.dimage",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "350882723041-10g8np7juhb7hdqcprlm01g50vtu516j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkRh-phrZK-H0q9rbgwOOFuD6zVnoZ_0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350882723041-10g8np7juhb7hdqcprlm01g50vtu516j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

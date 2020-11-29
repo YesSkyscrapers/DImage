@@ -3,7 +3,7 @@ import LoadingComponent from './LoadingComponent';
 import { connect } from 'react-redux';
 import moment from 'moment'
 import { Actions } from 'react-native-js-navigator';
-import { checkProxy } from '../../../store/actions/appActions';
+import { checkProxy, initCrashlytics } from '../../../store/actions/appActions';
 
 class LoadingContainer extends React.PureComponent {
 
@@ -12,9 +12,12 @@ class LoadingContainer extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.props.checkProxy().then(() => {
-            Actions.push("main", {}, { withoutAnimation: true })
+        this.props.initCrashlytics().then(() => {
+            this.props.checkProxy().then(() => {
+                Actions.push("main", {}, { withoutAnimation: true })
+            })
         })
+
     }
 
 
@@ -34,7 +37,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         checkProxy: () => dispatch(checkProxy()),
-
+        initCrashlytics: () => dispatch(initCrashlytics()),
     };
 };
 

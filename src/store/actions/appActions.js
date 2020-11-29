@@ -1,7 +1,8 @@
 import { changeFetchFunc } from 'react-native-cache-control-image'
 import { proxyFetchBlob } from '../../tools/fetch'
 import { toggle_proxy } from '../actionCreators/appActionCreators'
-
+import crashlytics from '@react-native-firebase/crashlytics';
+import DeviceInfo from 'react-native-device-info';
 
 const URL_FOR_PROXY_TEST = 'https://danbooru.donmai.us/'
 
@@ -18,6 +19,15 @@ export const checkProxy = () => {
             changeFetchFunc(proxyFetchBlob)
             dispatch(toggle_proxy(true))
         })
+    }
+}
+
+export const initCrashlytics = () => {
+    return async (dispatch, getState) => {
+        crashlytics().log('User signed in.');
+        await Promise.all([
+            crashlytics().setUserId(DeviceInfo.getDeviceId()),
+        ]);
     }
 }
 

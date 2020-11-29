@@ -7,6 +7,7 @@ import { Actions, onAddHistoryChangeListener } from 'react-native-js-navigator'
 import { getWaitPromise } from '../../../tools/tools'
 import { preload } from 'react-native-cache-control-image';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const IMAGE_PROPORTION = 150 / 225;
 
@@ -114,6 +115,10 @@ class ProfileContainer extends React.PureComponent {
         }
     }
 
+    onSettingsPress = () => {
+        crashlytics().crash();
+    }
+
     render() {
         return (
             <ProfileComponent
@@ -136,6 +141,7 @@ class ProfileContainer extends React.PureComponent {
                     this.state.showRow + 4,
                     this.state.showRow + 5
                 ]}
+                onSettingsPress={this.onSettingsPress}
             />
         )
     }

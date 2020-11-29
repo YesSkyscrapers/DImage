@@ -29,6 +29,7 @@ export default ProfileComponent = ({
     onLikedImagePress,
     onScroll,
     showRow,
+    onSettingsPress,
 }) => {
 
     const headerSizeStyle = {
@@ -44,7 +45,7 @@ export default ProfileComponent = ({
     return (
         <SafeArea safeStyle={styles.flexContainer}>
             <View style={styles.buttonsContainer}>
-                <Button style={styles.settingsContainer}>
+                <Button onPress={onSettingsPress} style={styles.settingsContainer}>
                     <FontAwesomeIcon icon={faSlidersH} size={25} color={colors.white} />
                 </Button>
             </View>
