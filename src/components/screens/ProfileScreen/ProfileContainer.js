@@ -8,6 +8,8 @@ import { getWaitPromise } from '../../../tools/tools'
 import { preload } from 'react-native-cache-control-image';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
 
+const IMAGE_PROPORTION = 150 / 225;
+
 class ProfileContainer extends React.PureComponent {
 
     constructor(props) {
@@ -15,10 +17,13 @@ class ProfileContainer extends React.PureComponent {
 
         this.state = {
             headerOffset: new Animated.Value(0),
-            processPreloadedPosts: []
+            processPreloadedPosts: [],
+            showRow: 0
         }
 
         this.screenWidth = Dimensions.get('screen').width;
+        this.screenHeight = Dimensions.get('screen').height;
+        this.itemHeight = ((Dimensions.get('screen').width - 11) / 2) / IMAGE_PROPORTION
         this.isDownloadProcessActive = false
     }
 
@@ -42,7 +47,7 @@ class ProfileContainer extends React.PureComponent {
 
     startPreloadProcess = () => {
         if (this.isDownloadProcessActive) {
-            const nextImage = this.props.likedImages.find(image => !this.state.processPreloadedPosts.includes(image.imageUrl))
+            const nextImage = this.props.likedImages.slice(this.state.showRow < 0 ? 0 : this.state.showRow).find(image => !this.state.processPreloadedPosts.includes(image.imageUrl))
 
             if (nextImage) {
                 return preload(nextImage.imageUrl).then(() => {
@@ -88,12 +93,25 @@ class ProfileContainer extends React.PureComponent {
     }
 
     onLikedImagePress = (item, index, array) => {
+        this.isDownloadProcessActive = false
         this.props.toggleTabBar(false)
         Actions.push("feedV2", {
             images: array,
             initialIndex: index,
             showButtons: false
         })
+    }
+
+    onScroll = event => {
+        const offset = event.nativeEvent.contentOffset.y - this.screenHeight;
+        if (offset > 0) {
+            const currentPage = Math.round((offset - offset % this.itemHeight) / this.itemHeight);
+            if (this.state.showRow != currentPage) {
+                this.setState({
+                    showRow: currentPage
+                })
+            }
+        }
     }
 
     render() {
@@ -104,6 +122,20 @@ class ProfileContainer extends React.PureComponent {
                 likedImages={this.props.likedImages}
                 processPreloadedPosts={this.state.processPreloadedPosts}
                 onLikedImagePress={this.onLikedImagePress}
+                onScroll={this.onScroll}
+                showRow={[
+                    this.state.showRow - 5,
+                    this.state.showRow - 4,
+                    this.state.showRow - 3,
+                    this.state.showRow - 2,
+                    this.state.showRow - 1,
+                    this.state.showRow,
+                    this.state.showRow + 1,
+                    this.state.showRow + 2,
+                    this.state.showRow + 3,
+                    this.state.showRow + 4,
+                    this.state.showRow + 5
+                ]}
             />
         )
     }

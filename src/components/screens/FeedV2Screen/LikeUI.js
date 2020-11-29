@@ -67,6 +67,7 @@ class LikeUI extends React.PureComponent {
             <Button
                 activeOpacity={1}
                 onPress={this.props.onPress}
+                style={styles.container}
             >
                 {
                     React.Children.map(this.props.children, child => {
@@ -116,10 +117,7 @@ export default connect(
 
 const styles = StyleSheet.create({
     container: {
-        width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flex: 1,
     },
     absoluteButtons: {
         position: 'absolute',

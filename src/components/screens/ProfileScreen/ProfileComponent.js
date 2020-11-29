@@ -27,6 +27,8 @@ export default ProfileComponent = ({
     likedImages,
     processPreloadedPosts,
     onLikedImagePress,
+    onScroll,
+    showRow,
 }) => {
 
     const headerSizeStyle = {
@@ -47,6 +49,8 @@ export default ProfileComponent = ({
                 </Button>
             </View>
             <ScrollView
+                onScroll={onScroll}
+                scrollEventThrottle={32}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContainer}
             >
@@ -99,10 +103,10 @@ export default ProfileComponent = ({
                         numColumns={2}
                         horizontal={false}
                         renderItem={({ item, index }) => (
-                            <Button onPress={() => onLikedImagePress(item, index, likedImages)}>
+                            <Button key={index} onPress={() => onLikedImagePress(item, index, likedImages)}>
                                 {
                                     (
-                                        processPreloadedPosts.includes(item.imageUrl) ? (
+                                        showRow.includes(Math.round(index / 2)) ? (
                                             <Image
                                                 url={item.imageUrl}
                                                 style={{
@@ -129,9 +133,16 @@ export default ProfileComponent = ({
                                                         )
                                                     }}
                                                 >
-                                                    <ActivityIndicator
-                                                        size={'small'}
-                                                    />
+                                                    {
+
+                                                        !processPreloadedPosts.includes(item.imageUrl) && (
+                                                            <ActivityIndicator
+                                                                size={'small'}
+                                                                color={colors.white}
+                                                            />
+                                                        )
+                                                    }
+
                                                 </View>
                                             )
                                     )

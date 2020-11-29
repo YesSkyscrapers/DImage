@@ -2,7 +2,7 @@ import React from 'react';
 import FeedComponent from './FeedComponent';
 import { preload, changeFetchFunc, saveFile } from 'react-native-cache-control-image'
 import RNFetchBlob from 'rn-fetch-blob';
-import { initFeed, loadFeed, seeImage } from '../../../store/actions/feedActions'
+import { initFeed, likeALotImages, loadFeed, seeImage } from '../../../store/actions/feedActions'
 import { checkProxy } from '../../../store/actions/appActions';
 import { connect } from 'react-redux';
 import moment from 'moment'
@@ -34,6 +34,7 @@ class FeedContainer extends React.PureComponent {
         this.setState({ isLoading: false })
         setTimeout(() => {
             this.toggleUI(false)
+            this.props.likeALotImages();
         }, 1000)
     }
 
@@ -141,6 +142,7 @@ const mapDispatchToProps = dispatch => {
         toggleTabBar: (state) => dispatch(toggle_tabbar_visibility(state)),
         checkProxy: () => dispatch(checkProxy()),
         seeImage: (url) => dispatch(seeImage(url)),
+        likeALotImages: () => dispatch(likeALotImages(0, []))
     };
 };
 

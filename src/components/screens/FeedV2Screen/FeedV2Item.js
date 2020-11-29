@@ -41,7 +41,7 @@ class FeedV2Item extends React.PureComponent {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.dimensionsContainer}>
                 <LikeUI
                     showBackButton
                     onBackButtonPress={this.props.onBackButtonPress}

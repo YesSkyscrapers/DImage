@@ -33,10 +33,12 @@ export default FeedV2Component = ({
                 decelerationRate={"fast"}
                 snapToInterval={styles.dimensionsContainer.height}
                 onScroll={onScroll}
+                scrollEventThrottle={32}
             >
                 {
                     images.map((image, index) =>
                         <FeedV2Item
+                            key={index}
                             onScreenTap={onScreenTap}
                             showButtons={showButtons}
                             showStub={!checkIfShouldShow(index)}

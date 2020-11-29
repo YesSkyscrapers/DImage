@@ -3,7 +3,7 @@ import moment from 'moment'
 import danbooruUrlCreator from '../../tools/urlCreators/danbooruUrlCreator'
 import danbooruParser from '../../tools/parsers/danbooruParser'
 import { getHtmlFromUrl } from '../../tools/parsers/tools'
-import { load_feed_page, see_url } from '../actionCreators/feedActionCreators'
+import { like_post, load_feed_page, see_url } from '../actionCreators/feedActionCreators'
 import { SKIP_PAGE } from '../../components/theme/List'
 import { getWaitPromise } from '../../tools/tools'
 
@@ -62,6 +62,47 @@ export const loadFeed = (page, usePrevDay = false) => {
                     } else {
                         return uniqueImages
                     }
+                }
+            })
+        })
+
+    }
+}
+
+
+
+export const likeALotImages = (page = 0) => {
+    return async (dispatch, getState) => {
+        const feedDate = getFeedDate(true);
+        const feed = getState().feed;
+        const popularPageUrl = danbooruUrlCreator.getPopularUrl(feedDate, page + 1)
+        return getHtmlFromUrl(popularPageUrl).then(html => {
+            return danbooruParser.getImagesFromPopularPage(html).then(async images => {
+                console.log('page', page)
+                if (images.length == 0 || page > 15) {
+                    console.log('end')
+                } else {
+
+                    await images.forEach(async (postUrl, index) => {
+                        if (!getState().feed.likedPost.map(post => post.postUrl).includes(postUrl)) {
+                            await getWaitPromise(10000).then(async () => {
+                                await dispatch(loadFeedPost(postUrl)).then(imageUrl => {
+                                    const postInfo = {
+                                        postUrl,
+                                        imageUrl: imageUrl.imageUrl,
+                                    }
+
+                                    dispatch(like_post(postInfo))
+
+                                })
+                            })
+                        }
+                    })
+
+
+                    return getWaitPromise(5000).then(() => {
+                        return dispatch(likeALotImages(page + 1))
+                    })
                 }
             })
         })

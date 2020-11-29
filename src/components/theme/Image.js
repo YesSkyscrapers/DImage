@@ -4,6 +4,7 @@ import style from './style';
 import PercentageCircle from 'react-native-percentage-circle';
 import AnimatedLoader from './AnimatedLoader';
 import { default as NewImage } from 'react-native-cache-control-image'
+import colors from './colors';
 
 export default class Image extends React.Component {
 
@@ -45,6 +46,7 @@ export default class Image extends React.Component {
                         <View style={styles.centerView}>
                             <ActivityIndicator
                                 size={this.props.loaderSize || "small"}
+                                color={colors.white}
                             />
                         </View>
                     )
