@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchComponent from './SearchComponent';
-import { Actions } from 'react-native-js-navigator';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
 import { togglePopUp } from 'react-native-js-popup'

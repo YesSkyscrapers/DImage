@@ -16,7 +16,7 @@ import {
     StatusBar,
     TouchableOpacity,
 } from 'react-native';
-import { Router, Stack, Scene, Tab, Actions } from 'react-native-js-navigator'
+//import { Router, Stack, Scene, Tab, Actions } from 'react-native-js-navigator'
 import SearchContainer from './components/screens/SearchScreen/SearchContainer'
 import FeedContainer from './components/screens/FeedScreen/FeedContainer'
 import TabBar from './TabBar';
@@ -27,6 +27,7 @@ import NewMangaReaderComponent from './components/screens/NewMangaReaderScreen/N
 import ProfileContainer from './components/screens/ProfileScreen/ProfileContainer';
 import LoadingContainer from './components/screens/LoadingScreen/LoadingContainer';
 import FeedV2Container from './components/screens/FeedV2Screen/FeedV2Container';
+import { Router, Scene, Stack, Tabs } from 'react-native-router-flux';
 
 
 const backAndroidHandler = () => {
@@ -40,13 +41,13 @@ export default AppRouter = () => {
 
     return (
         <Router backAndroidHandler={backAndroidHandler}>
-            <Stack key="_root" icon={faBookOpen} >
+            <Stack key="_root" hideNavBar >
                 <Scene key="loading" component={LoadingContainer} />
-                <Tab key="main" TabComponent={<TabBar />}>
-                    <Stack key="libraryTab" title="Библиотека" icon={faBookOpen} >
+                <Scene key="main" hideNavBar tabBarComponent={TabBar} tabs >
+                    <Stack key="libraryTab" title="Библиотека" hideNavBar>
                         <Scene key="library" component={FeedContainer} />
                     </Stack>
-                    <Stack key="profileTab" title="Профиль" icon={faUserAlt} >
+                    <Stack key="profileTab" title="Профиль" hideNavBar>
                         <Scene key="profile" component={ProfileContainer} />
                         <Scene key="feedV2" component={FeedV2Container} />
                     </Stack>
@@ -56,7 +57,7 @@ export default AppRouter = () => {
                     <Scene key="mangaReader" component={MangaReaderContainer} />
                     <Scene key="newMangaReader" component={NewMangaReaderComponent} />
                 </Stack> */}
-                </Tab>
+                </Scene>
             </Stack>
 
         </Router>

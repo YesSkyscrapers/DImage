@@ -9,7 +9,6 @@ import moment from 'moment'
 import { Dimensions } from 'react-native';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
 import { SKIP_PAGE } from '../../theme/List';
-import { onAddHistoryChangeListener } from 'react-native-js-navigator'
 
 class FeedContainer extends React.PureComponent {
 
@@ -29,7 +28,6 @@ class FeedContainer extends React.PureComponent {
     screenChanged = false
 
     componentDidMount() {
-        // onAddHistoryChangeListener(this.onNavigatorHistoryChange)
 
         this.setState({ isLoading: false })
         setTimeout(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, ActivityIndicator, TextInput } from 'react-native';
-import { Actions } from 'react-native-js-navigator';
+import { Actions } from 'react-native-router-flux';
 import Button from '../../theme/Button';
 import SafeArea from '../../theme/SafeArea';
 import PopUp from 'react-native-js-popup'

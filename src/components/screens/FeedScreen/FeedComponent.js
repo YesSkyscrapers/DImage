@@ -7,7 +7,7 @@ import {
     Dimensions,
     RefreshControl
 } from 'react-native';
-import { Actions } from 'react-native-js-navigator';
+import { Actions } from 'react-native-router-flux';
 import Button from '../../theme/Button';
 import SafeArea from '../../theme/SafeArea';
 import colors from '../../theme/colors';

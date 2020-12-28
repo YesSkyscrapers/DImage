@@ -49,7 +49,7 @@ parser.getPostInfo = (html, url) => {
         postInfo.imageUrl = imgContainer.getAttribute('src')
         const originalSizeLink = root.querySelector(".image-view-original-link");
         if (originalSizeLink) {
-            postInfo.imageUrl = originalSizeLink.getAttribute("href")
+            postInfo.fullImageUrl = originalSizeLink.getAttribute("href")
         }
 
         return resolve(postInfo)

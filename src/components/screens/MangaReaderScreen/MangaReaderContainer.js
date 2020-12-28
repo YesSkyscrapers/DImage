@@ -1,6 +1,6 @@
 import React from 'react';
 import MangaReaderComponent from './MangaReaderComponent';
-import { Actions } from 'react-native-js-navigator';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
 import { getHtmlFromUrl, mergeActiveUrlAndSubUrl } from '../../../tools/parsers/tools';

@@ -2,7 +2,7 @@ import React from 'react';
 import FeedV2Component from './FeedV2Component';
 import { connect } from 'react-redux';
 import { Animated, Dimensions } from 'react-native';
-import { Actions } from 'react-native-js-navigator';
+import { Actions } from 'react-native-router-flux';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
 
 const HEADER_OFFSET = 500;

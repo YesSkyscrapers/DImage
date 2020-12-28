@@ -3,7 +3,7 @@ import ProfileComponent from './ProfileComponent';
 import { connect } from 'react-redux';
 import moment from 'moment'
 import { Animated, Dimensions } from 'react-native';
-import { Actions, onAddHistoryChangeListener } from 'react-native-js-navigator'
+import { Actions } from 'react-native-router-flux'
 import { getWaitPromise } from '../../../tools/tools'
 import { preload } from 'react-native-cache-control-image';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
@@ -29,7 +29,7 @@ class ProfileContainer extends React.PureComponent {
     }
 
     componentDidMount() {
-        onAddHistoryChangeListener(this.navigatorChanged)
+        //onAddHistoryChangeListener(this.navigatorChanged)
 
         this.startAnimation()
         this.startPreloadProcess()

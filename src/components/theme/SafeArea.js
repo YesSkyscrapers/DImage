@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Platform, StatusBar } from 'react-native';
-import { Actions } from 'react-native-js-navigator';
+import { Actions } from 'react-native-router-flux';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import Button from './Button';
 
@@ -12,35 +12,35 @@ export default SafeArea = ({
     safeStyle,
     ...props
 }) => (
-        <View style={[styles.container, safeStyle]}>
-            {
-                useLibMethod || Platform.OS == 'ios' ? (
-                    <SafeAreaInsetsContext.Consumer>
-                        {
-                            (insets) => (
-                                <View style={[styles.container, { paddingTop: insets.top }]}>
-                                    <View style={[styles.container, style]}>
-                                        {
-                                            children
-                                        }
-                                    </View>
+    <View style={[styles.container, safeStyle]}>
+        {
+            useLibMethod || Platform.OS == 'ios' ? (
+                <SafeAreaInsetsContext.Consumer>
+                    {
+                        (insets) => (
+                            <View style={[styles.container, { paddingTop: insets.top }]}>
+                                <View style={[styles.container, style]}>
+                                    {
+                                        children
+                                    }
                                 </View>
-                            )
-                        }
-                    </SafeAreaInsetsContext.Consumer>
-                ) : (
-                        <View
-                            style={[styles.container, styles.androidMargin]}>
-                            <View style={[styles.container, style]}>
-                                {
-                                    children
-                                }
                             </View>
+                        )
+                    }
+                </SafeAreaInsetsContext.Consumer>
+            ) : (
+                    <View
+                        style={[styles.container, styles.androidMargin]}>
+                        <View style={[styles.container, style]}>
+                            {
+                                children
+                            }
                         </View>
-                    )
-            }
-        </View>
-    )
+                    </View>
+                )
+        }
+    </View>
+)
 
 const styles = StyleSheet.create({
     container: {

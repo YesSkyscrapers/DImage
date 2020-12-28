@@ -2,13 +2,16 @@ import React from 'react';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
 import Button from './components/theme/Button';
-import { Actions } from 'react-native-js-navigator';
+import { Actions } from 'react-native-router-flux';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { connect } from 'react-redux';
 import colors from './components/theme/colors';
+import { faBookOpen, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ANIMATION_DURATION = 400;
 const HIDING_HEIGHT = 300;
+
+const TabBarIcons = [faBookOpen, faUserAlt]
 
 class TabBar extends React.PureComponent {
 
@@ -24,10 +27,12 @@ class TabBar extends React.PureComponent {
     }
 
     onKeyPress = (element, index) => {
-        const { activeIndex, activeTabKeyName, tabs, ...props } = this.props;
+        const { state } = this.props.navigation;
+        const activeTabIndex = state.index;
 
-        if (element !== activeTabKeyName) {
-            Actions.push(element);
+        if (index !== activeTabIndex) {
+            console.log(element)
+            Actions[element]()
         }
     }
 
@@ -59,20 +64,24 @@ class TabBar extends React.PureComponent {
     }
 
     renderTabBar = () => {
-        const { activeIndex, activeTabKeyName, tabs, ...props } = this.props;
+        const { state } = this.props.navigation;
+        const activeTabIndex = state.index;
+
         return (
             <SafeAreaInsetsContext.Consumer>
                 {(insets) => (
                     <View style={[styles.tabbarContainer, { paddingBottom: insets.bottom }]}>
                         <View style={styles.tabContainer}>
                             {
-                                tabs.map((element, index) => {
-                                    const isActive = activeTabKeyName == element.elementKey
+                                state.routes.map((element, index) => {
+                                    const isActive = activeTabIndex == index
+
                                     return (
-                                        <Button style={styles.tabKeyContainer} key={element.elementKey} onPress={() => this.onKeyPress(element.elementKey, index)}>
-                                            <FontAwesomeIcon color={isActive ? colors.white09 : colors.darkLayout9} size={28} icon={element.icon} style={styles.tabIcon} />
+                                        <Button style={styles.tabKeyContainer} key={element.elementKey} onPress={() => this.onKeyPress(element.key, index)}>
+                                            <FontAwesomeIcon color={isActive ? colors.white09 : colors.darkLayout9} size={28} icon={TabBarIcons[index]} style={styles.tabIcon} />
                                         </Button>
                                     )
+
                                 })
                             }
                         </View>
@@ -83,6 +92,7 @@ class TabBar extends React.PureComponent {
     }
 
     render() {
+
         return (
             <View>
                 <Animated.View style={{ marginBottom: Animated.multiply(this.state.tabbarOffset, new Animated.Value(-1)) }}>

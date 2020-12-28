@@ -2,7 +2,7 @@ import React from 'react';
 import LoadingComponent from './LoadingComponent';
 import { connect } from 'react-redux';
 import moment from 'moment'
-import { Actions } from 'react-native-js-navigator';
+import { Actions } from 'react-native-router-flux';
 import { checkProxy, initCrashlytics } from '../../../store/actions/appActions';
 
 class LoadingContainer extends React.PureComponent {
