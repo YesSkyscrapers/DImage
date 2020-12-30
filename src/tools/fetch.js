@@ -1,7 +1,7 @@
 import RNFetchBlob from "rn-fetch-blob";
 import { store } from "../store/store";
 
-const PROXY_URL = "http://95.217.166.144:3000/"
+export const PROXY_URL = "http://95.217.166.144:3000/"
 
 export const proxyableFetch = (...params) => {
     if (store.getState().app.useProxy) {

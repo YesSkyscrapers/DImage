@@ -23,9 +23,8 @@ export default FeedV2Component = ({
     showButtons,
     onScreenTap,
     headerOffset,
+    scrollReady,
 }) => {
-
-
     return (
         <View style={styles.container}>
             <ScrollView
@@ -36,14 +35,17 @@ export default FeedV2Component = ({
                 scrollEventThrottle={32}
             >
                 {
-                    images.map((image, index) =>
-                        <FeedV2Item
-                            key={index}
-                            onScreenTap={onScreenTap}
-                            showButtons={showButtons}
-                            showStub={!checkIfShouldShow(index)}
-                            image={image}
-                        />
+                    images.map((image, index) => {
+                        return (
+                            <FeedV2Item
+                                key={index}
+                                onScreenTap={onScreenTap}
+                                showButtons={showButtons}
+                                showStub={!checkIfShouldShow(index) || !scrollReady}
+                                image={image}
+                            />
+                        )
+                    }
                     )
                 }
             </ScrollView>

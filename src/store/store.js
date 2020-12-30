@@ -14,8 +14,8 @@ import appReducer from './reducers/appReducer';
 import feedReducer from './reducers/feedReducer';
 
 const secureStorage = createSensitiveStorage({
-    keychainService: "readerchanKeychain",
-    sharedPreferencesName: "readerchanPref"
+    keychainService: "dimageKeychain",
+    sharedPreferencesName: "dimagePref"
 });
 
 const rootPersistConfig = {

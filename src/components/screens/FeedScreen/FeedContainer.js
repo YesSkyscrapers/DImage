@@ -1,6 +1,5 @@
 import React from 'react';
 import FeedComponent from './FeedComponent';
-import { preload, changeFetchFunc, saveFile } from 'react-native-cache-control-image'
 import RNFetchBlob from 'rn-fetch-blob';
 import { initFeed, likeALotImages, loadFeed, seeImage } from '../../../store/actions/feedActions'
 import { checkProxy } from '../../../store/actions/appActions';
@@ -32,7 +31,7 @@ class FeedContainer extends React.PureComponent {
         this.setState({ isLoading: false })
         setTimeout(() => {
             this.toggleUI(false)
-            this.props.likeALotImages();
+            // this.props.likeALotImages();
         }, 1000)
     }
 
@@ -107,7 +106,7 @@ class FeedContainer extends React.PureComponent {
     }
 
     onDownloadPress = (url) => {
-        return saveFile(url)
+        //    return saveFile(url)
     }
 
     render() {

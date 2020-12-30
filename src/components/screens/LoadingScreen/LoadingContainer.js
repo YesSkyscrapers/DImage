@@ -12,8 +12,11 @@ class LoadingContainer extends React.PureComponent {
     }
 
     componentDidMount() {
+        console.log('started')
         this.props.initCrashlytics().then(() => {
+            console.log('crashlytics inited')
             this.props.checkProxy().then(() => {
+                console.log('proxy checked')
                 Actions.push("main", {}, { withoutAnimation: true })
             })
         })

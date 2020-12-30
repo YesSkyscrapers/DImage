@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ActivityIndicator, ScrollView } from 'react-native';
 import { loadFeedPost } from '../../../store/actions/feedActions';
-import { preload } from 'react-native-cache-control-image'
 import { connect } from 'react-redux';
 import Image from '../../theme/Image';
 import colors from '../../theme/colors';
@@ -32,13 +31,11 @@ class FeedItem extends React.PureComponent {
                     if (this.props.onCompleteUrlReceived) {
                         this.props.onCompleteUrlReceived(postInfo.imageUrl)
                     }
-                    preload(postInfo.imageUrl).then((result) => {
-                        if (this.cancelLoad) {
-                            return;
-                        }
-                        this.setState({
-                            isLoading: !result
-                        })
+                    if (this.cancelLoad) {
+                        return;
+                    }
+                    this.setState({
+                        isLoading: false
                     })
                 })
             } else {

@@ -6,6 +6,11 @@ import { getHtmlFromUrl } from '../../tools/parsers/tools'
 import { like_post, load_feed_page, see_url } from '../actionCreators/feedActionCreators'
 import { SKIP_PAGE } from '../../components/theme/List'
 import { getWaitPromise } from '../../tools/tools'
+import { PermissionsAndroid, Platform } from 'react-native'
+import RNFetchBlob from 'rn-fetch-blob';
+import createGuid from "react-native-create-guid";
+import CameraRoll from '@react-native-community/cameraroll'
+import { PROXY_URL } from '../../tools/fetch'
 
 const getFeedDate = (usePrevDay = false) => {
     return moment().add(usePrevDay ? -2 : -1, "days").format('YYYY-MM-DD');
@@ -78,7 +83,8 @@ export const likeALotImages = (page = 0) => {
         const popularPageUrl = danbooruUrlCreator.getPopularUrl(feedDate, page + 1)
         return getHtmlFromUrl(popularPageUrl).then(html => {
             return danbooruParser.getImagesFromPopularPage(html).then(async images => {
-                console.log('page', page)
+
+
                 if (images.length == 0 || page > 15) {
                     console.log('end')
                 } else {
@@ -110,3 +116,111 @@ export const likeALotImages = (page = 0) => {
     }
 }
 
+
+const getUniquePath = (rootPath, ext) => {
+    return createGuid().then(newGuid => {
+        const path = rootPath + newGuid + ext;
+        return RNFetchBlob.fs.exists(path).then(isExist => {
+            if (isExist) {
+                return getUniquePath();
+            } else {
+                return path;
+            }
+        })
+    })
+}
+
+const downloadFile = item => {
+
+    return async (dispatch, getState) => {
+        const useProxy = getState().app.useProxy
+        const url = item.fullImageUrl;
+
+        return RNFetchBlob.config({
+            fileCache: false
+        }).fetch('GET', useProxy ? PROXY_URL : url, {
+            "url": useProxy ? url : undefined,
+            "Cache-Control": 'no-store',
+        }).then(res => {
+            let status = res.info().status;
+            if (status == 200) {
+                if (Platform.OS == 'ios') {
+                    return res.base64().then(base64Str => {
+                        return base64Str;
+                    })
+
+                } else {
+                    let base64Str = res.base64()
+                    return base64Str
+                }
+
+
+            } else {
+                return false;
+            }
+        })
+    }
+}
+
+const saveFileInStorage = (base64) => {
+    return async (dispatch, getState) => {
+        if (Platform.OS === 'android') {
+            try {
+                const granted = await PermissionsAndroid.requestMultiple([
+                    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+                ]);
+                return getUniquePath(`${RNFetchBlob.fs.dirs.PictureDir}/`, '.png').then(imagePath => {
+                    if (Object.values(granted).filter(perm => perm != 'granted').length == 0) {
+                        return RNFetchBlob.fs.createFile(`${imagePath}`, `${base64}`, 'base64')
+                            .then(() => {
+                                console.log(123)
+                                //dispatch(show_success('Сохранено в галерее телефона'))
+                                return RNFetchBlob.fs.scanFile([{ path: `${imagePath}`, mime: 'image/png' }]).then(res => true);
+                            })
+                            .catch((err) => {
+                                console.log(322, err)
+                                // пробуем перезаписать файл
+
+                                return RNFetchBlob.fs.writeFile(`${imagePath}`, `${base64}`, 'base64')
+                                    .then(() => {
+                                        //dispatch(show_success('Перезаписано'))
+                                        return RNFetchBlob.fs.scanFile([{ path: `${imagePath}`, mime: 'image/png' }]).then(res => true);
+                                    })
+                                    .catch((err) => {
+                                        console.log(err)
+                                    })
+                            })
+                    } else {
+                        console.log('Camera permission denied');
+                    }
+                })
+
+            } catch (err) {
+                console.warn(err);
+            }
+
+        } else {
+            return CameraRoll.saveToCameraRoll('data:image/png;base64,' + `${base64}`)
+                .then(() => {
+                    //dispatch(show_success('Сохранено в галерее телефона'))
+
+                    return true;
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+
+    }
+}
+
+
+export const saveFile = (item) => {
+    return async (dispatch, getState) => {
+
+        return dispatch(downloadFile(item)).then(base64 => {
+            return dispatch(saveFileInStorage(base64))
+        })
+    }
+}

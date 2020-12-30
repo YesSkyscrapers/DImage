@@ -5,9 +5,9 @@ import {
     ActivityIndicator,
     Dimensions,
 } from 'react-native';
-import { saveFile } from 'react-native-cache-control-image';
 import { connect } from 'react-redux';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
+import { saveFile } from '../../../store/actions/feedActions';
 import colors from '../../theme/colors';
 import Image from '../../theme/Image';
 import LikeUI from './LikeUI';
@@ -35,11 +35,13 @@ class FeedV2Item extends React.PureComponent {
 
 
 
-    onDownloadPress = url => {
-        saveFile(url)
+    onDownloadPress = item => {
+        return this.props.downloadFile(item)
     }
 
     render() {
+
+
         return (
             <View style={styles.dimensionsContainer}>
                 <LikeUI
@@ -78,6 +80,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         toggleTabBar: (state) => dispatch(toggle_tabbar_visibility(state)),
+        downloadFile: item => dispatch(saveFile(item))
     };
 };
 

@@ -30,6 +30,8 @@ export default ProfileComponent = ({
     onScroll,
     showRow,
     onSettingsPress,
+    onFlatListLayout,
+    imageSizeStyle,
 }) => {
 
     const headerSizeStyle = {
@@ -37,10 +39,7 @@ export default ProfileComponent = ({
         height: Dimensions.get('screen').width / HEADER_PROPORTION,
     }
 
-    const imageSizeStyle = {
-        width: (Dimensions.get('screen').width - 11) / 2,
-        height: ((Dimensions.get('screen').width - 11) / 2) / IMAGE_PROPORTION,
-    }
+
 
     return (
         <SafeArea safeStyle={styles.flexContainer}>
@@ -95,7 +94,7 @@ export default ProfileComponent = ({
                     </View>
                 </View>
                 <View style={styles.likedBlockTitleContainer} />
-                <View>
+                <View onLayout={onFlatListLayout}>
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         data={likedImages}

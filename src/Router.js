@@ -27,7 +27,7 @@ import NewMangaReaderComponent from './components/screens/NewMangaReaderScreen/N
 import ProfileContainer from './components/screens/ProfileScreen/ProfileContainer';
 import LoadingContainer from './components/screens/LoadingScreen/LoadingContainer';
 import FeedV2Container from './components/screens/FeedV2Screen/FeedV2Container';
-import { Router, Scene, Stack, Tabs } from 'react-native-router-flux';
+import { Actions, Router, Scene, Stack, Tabs } from 'react-native-router-flux';
 
 
 const backAndroidHandler = () => {
@@ -45,7 +45,7 @@ export default AppRouter = () => {
                 <Scene key="loading" component={LoadingContainer} />
                 <Scene key="main" hideNavBar tabBarComponent={TabBar} tabs >
                     <Stack key="libraryTab" title="Библиотека" hideNavBar>
-                        <Scene key="library" component={FeedContainer} />
+                        <Scene key="library" component={FeedV2Container} />
                     </Stack>
                     <Stack key="profileTab" title="Профиль" hideNavBar>
                         <Scene key="profile" component={ProfileContainer} />

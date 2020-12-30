@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ActivityIndicator, ScrollView, Animated } from 'react-native';
 import { loadFeedPost } from '../../../store/actions/feedActions';
-import { preload } from 'react-native-cache-control-image'
 import { connect } from 'react-redux';
 import Image from '../../theme/Image';
 import colors from '../../theme/colors';
@@ -43,7 +42,7 @@ class LikeUI extends React.PureComponent {
     }
 
     onDownloadPress = () => {
-        this.props.onDownloadPress(this.props.item.imageUrl).then(() => {
+        this.props.onDownloadPress(this.props.item).then(() => {
             this.setState({
                 saved: true
             })

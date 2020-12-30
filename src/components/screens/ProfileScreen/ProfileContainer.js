@@ -5,7 +5,6 @@ import moment from 'moment'
 import { Animated, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 import { getWaitPromise } from '../../../tools/tools'
-import { preload } from 'react-native-cache-control-image';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
 import crashlytics from '@react-native-firebase/crashlytics';
 
@@ -26,13 +25,17 @@ class ProfileContainer extends React.PureComponent {
         this.screenHeight = Dimensions.get('screen').height;
         this.itemHeight = ((Dimensions.get('screen').width - 11) / 2) / IMAGE_PROPORTION
         this.isDownloadProcessActive = false
+        this.imageSizeStyle = {
+            width: (Dimensions.get('screen').width - 11) / 2,
+            height: ((Dimensions.get('screen').width - 11) / 2) / IMAGE_PROPORTION,
+        }
     }
 
     componentDidMount() {
         //onAddHistoryChangeListener(this.navigatorChanged)
 
         this.startAnimation()
-        this.startPreloadProcess()
+        //this.startPreloadProcess()
     }
 
     profileScreenName = 'profileTab'
@@ -99,14 +102,18 @@ class ProfileContainer extends React.PureComponent {
         Actions.push("feedV2", {
             images: array,
             initialIndex: index,
-            showButtons: false
+            showButtons: false,
+            disableActiveSearchingProcess: true
         })
     }
 
     onScroll = event => {
-        const offset = event.nativeEvent.contentOffset.y - this.screenHeight;
+        const rowHeight = this.imageSizeStyle.height + 5;
+        const offset = event.nativeEvent.contentOffset.y - this.flatlistOffset;
+        //console.log(offset)
         if (offset > 0) {
-            const currentPage = Math.round((offset - offset % this.itemHeight) / this.itemHeight);
+            const currentPage = Math.round((offset - offset % rowHeight) / rowHeight);
+            //console.log(currentPage)
             if (this.state.showRow != currentPage) {
                 this.setState({
                     showRow: currentPage
@@ -119,6 +126,10 @@ class ProfileContainer extends React.PureComponent {
         crashlytics().crash();
     }
 
+    onFlatListLayout = event => {
+        this.flatlistOffset = event.nativeEvent.layout.y + 20;
+    }
+
     render() {
         return (
             <ProfileComponent
@@ -129,10 +140,6 @@ class ProfileContainer extends React.PureComponent {
                 onLikedImagePress={this.onLikedImagePress}
                 onScroll={this.onScroll}
                 showRow={[
-                    this.state.showRow - 5,
-                    this.state.showRow - 4,
-                    this.state.showRow - 3,
-                    this.state.showRow - 2,
                     this.state.showRow - 1,
                     this.state.showRow,
                     this.state.showRow + 1,
@@ -142,6 +149,8 @@ class ProfileContainer extends React.PureComponent {
                     this.state.showRow + 5
                 ]}
                 onSettingsPress={this.onSettingsPress}
+                onFlatListLayout={this.onFlatListLayout}
+                imageSizeStyle={this.imageSizeStyle}
             />
         )
     }

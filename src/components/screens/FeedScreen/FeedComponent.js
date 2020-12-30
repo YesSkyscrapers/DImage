@@ -80,8 +80,8 @@ export default FeedComponent = ({
                                 <FeedItemContainer
                                     item={item}
                                     onPress={onScreenTap}
-                                    onDownloadPress={onDownloadPress}
                                     showButtons={showButtons}
+                                    onDownloadPress={onDownloadPress}
                                 >
                                     {
                                         checkIfImageShow(index, currentPage) ? (
