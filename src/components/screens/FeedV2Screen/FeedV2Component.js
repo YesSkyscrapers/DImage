@@ -24,6 +24,7 @@ export default FeedV2Component = ({
     onScreenTap,
     headerOffset,
     scrollReady,
+    showBackButton,
 }) => {
     return (
         <View style={styles.container}>
@@ -50,7 +51,7 @@ export default FeedV2Component = ({
                 }
             </ScrollView>
             {
-                true && (
+                showBackButton && (
                     <Animated.View style={[
                         styles.absoluteHeader,
                         {

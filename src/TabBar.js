@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { connect } from 'react-redux';
 import colors from './components/theme/colors';
 import { faBookOpen, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { toggle_tabbar_visibility } from './store/actionCreators/appActionCreators';
 
 const ANIMATION_DURATION = 400;
 const HIDING_HEIGHT = 300;
@@ -20,9 +21,10 @@ class TabBar extends React.PureComponent {
 
         this.state = {
             tabbarNativeOffset: new Animated.Value(0),
-            tabbarOffset: new Animated.Value(0)
+            tabbarOffset: new Animated.Value(0),
         }
 
+        this.allowClick = true;
         this.isOpen = true
     }
 
@@ -30,14 +32,14 @@ class TabBar extends React.PureComponent {
         const { state } = this.props.navigation;
         const activeTabIndex = state.index;
 
-        if (index !== activeTabIndex) {
-            console.log(element)
+        if (index !== activeTabIndex && this.allowClick) {
             Actions[element]()
         }
     }
 
     toggleTabBar = (isOpen = true) => {
         this.isOpen = isOpen
+        this.allowClick = false;
         Animated.parallel([
             Animated.timing(this.state.tabbarNativeOffset, {
                 toValue: isOpen ? 0 : HIDING_HEIGHT,
@@ -53,6 +55,7 @@ class TabBar extends React.PureComponent {
             })
         ]).start(() => {
 
+            this.allowClick = true;
         })
     }
 
@@ -122,7 +125,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        toggleTabBar: state => dispatch(toggle_tabbar_visibility(state))
     };
 };
 

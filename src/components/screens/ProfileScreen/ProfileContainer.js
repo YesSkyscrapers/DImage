@@ -103,7 +103,8 @@ class ProfileContainer extends React.PureComponent {
             images: array,
             initialIndex: index,
             showButtons: false,
-            disableActiveSearchingProcess: true
+            disableActiveSearchingProcess: true,
+            showBackButton: true,
         })
     }
 
@@ -151,6 +152,7 @@ class ProfileContainer extends React.PureComponent {
                 onSettingsPress={this.onSettingsPress}
                 onFlatListLayout={this.onFlatListLayout}
                 imageSizeStyle={this.imageSizeStyle}
+                downloadedCount={this.props.downloadedCount}
             />
         )
     }
@@ -158,7 +160,8 @@ class ProfileContainer extends React.PureComponent {
 
 const mapStateToProps = state => {
     return {
-        likedImages: state.feed.likedPost
+        likedImages: state.feed.likedPost,
+        downloadedCount: state.feed.downloadedCount,
     };
 };
 

@@ -3,7 +3,7 @@ import moment from 'moment'
 import danbooruUrlCreator from '../../tools/urlCreators/danbooruUrlCreator'
 import danbooruParser from '../../tools/parsers/danbooruParser'
 import { getHtmlFromUrl } from '../../tools/parsers/tools'
-import { like_post, load_feed_page, see_url } from '../actionCreators/feedActionCreators'
+import { download_post, like_post, load_feed_page, see_url } from '../actionCreators/feedActionCreators'
 import { SKIP_PAGE } from '../../components/theme/List'
 import { getWaitPromise } from '../../tools/tools'
 import { PermissionsAndroid, Platform } from 'react-native'
@@ -218,9 +218,10 @@ const saveFileInStorage = (base64) => {
 
 export const saveFile = (item) => {
     return async (dispatch, getState) => {
-
         return dispatch(downloadFile(item)).then(base64 => {
-            return dispatch(saveFileInStorage(base64))
+            return dispatch(saveFileInStorage(base64)).then(() => {
+                dispatch(download_post()); //counter
+            })
         })
     }
 }

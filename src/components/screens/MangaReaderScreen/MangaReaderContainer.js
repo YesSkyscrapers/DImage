@@ -51,7 +51,6 @@ class MangaReaderContainer extends React.PureComponent {
 
     getUnPreloadedImagesUrls = (chapter, page) => {
         if ((chapter - this.state.currentChapterIndex) > PRELOAD_CHAPTER_LENGTH) {
-            console.log('1')
             return [undefined, undefined, undefined]
         }
         let currentUrl = this.state.chapters[chapter].images[page]
@@ -59,7 +58,6 @@ class MangaReaderContainer extends React.PureComponent {
             let nextPage = page + 1;
             if (nextPage >= this.state.chapters[chapter].images.length) {
                 if ((chapter + 1) >= this.state.chapters.length) {
-                    console.log('2')
                     return [undefined, undefined, undefined]
                 } else {
                     return this.getUnPreloadedImagesUrls(chapter + 1, 0)
@@ -68,8 +66,7 @@ class MangaReaderContainer extends React.PureComponent {
                 return this.getUnPreloadedImagesUrls(chapter, page + 1)
             }
         } else {
-            console.log('3', this.state.chapters.length, chapter, this.state.chapters[chapter].images.length, page)
-            console.log('3', this.state.chapters)
+
             return [currentUrl, chapter, page];
         }
     }

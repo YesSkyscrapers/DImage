@@ -21,7 +21,8 @@ class FeedV2Container extends React.PureComponent {
             showButtons: props.showButtons == undefined ? true : props.showButtons,
             headerOffset: new Animated.Value(props.showButtons ? 0 : -HEADER_OFFSET),
             activeSearchingProcess: !props.disableActiveSearchingProcess,
-            scrollReady: false
+            scrollReady: false,
+            showBackButton: props.showBackButton == undefined ? false : props.showBackButton
         }
 
         this.screenHeight = Dimensions.get('screen').height
@@ -29,10 +30,14 @@ class FeedV2Container extends React.PureComponent {
         this.usePrevDay = false;
         this.loadComplete = false;
         this.page = 0;
+        this.currentSceneName = null;
     }
 
 
     componentDidMount() {
+        setTimeout(() => {
+            this.currentSceneName = Actions.currentScene;
+        }, 100);
         if (this.props.initialIndex != undefined) {
             setTimeout(() => {
                 this.scrollRef.scrollTo({
@@ -141,12 +146,15 @@ class FeedV2Container extends React.PureComponent {
     }
 
     toggleUI = (state) => {
-        const newState = state == undefined ? !this.state.showButtons : state
-        this.props.toggleTabBar(state)
-        this.setState({
-            showButtons: newState
-        })
-        this.animate(newState)
+        if (Actions.currentScene == this.currentSceneName) {
+            const newState = state == undefined ? !this.state.showButtons : state
+            this.props.toggleTabBar(state)
+
+            this.setState({
+                showButtons: newState
+            })
+            this.animate(newState)
+        }
     }
 
     animate = (state = false) => {
@@ -173,6 +181,7 @@ class FeedV2Container extends React.PureComponent {
                 onScreenTap={this.onScreenTap}
                 headerOffset={this.state.headerOffset}
                 scrollReady={this.state.scrollReady}
+                showBackButton={this.state.showBackButton}
             />
         )
     }

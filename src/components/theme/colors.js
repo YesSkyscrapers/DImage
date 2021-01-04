@@ -11,6 +11,7 @@ const colors = {
     darkLayout8: 'rgba(254,254,254,0.15)',
     darkLayout9: 'rgba(254,254,254,0.16)',
     white09: 'rgba(254,254,254,0.90)',
+    red: 'red'
 }
 
 export default colors;

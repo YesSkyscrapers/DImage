@@ -6,4 +6,6 @@ export const LOAD_FEED_PAGE = "LOAD_FEED_PAGE";
 
 export const LIKE_POST = "LIKE_POST";
 
-export const UNLIKE_POST = "UNLIKE_POST"; 
+export const UNLIKE_POST = "UNLIKE_POST";
+
+export const DOWNLOAD_POST = "DOWNLOAD_POST"; 

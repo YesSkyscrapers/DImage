@@ -32,6 +32,7 @@ export default ProfileComponent = ({
     onSettingsPress,
     onFlatListLayout,
     imageSizeStyle,
+    downloadedCount,
 }) => {
 
     const headerSizeStyle = {
@@ -90,7 +91,7 @@ export default ProfileComponent = ({
                     </View>
                     <View style={styles.metricsContainer}>
                         <Text style={styles.metricTitle}>Скачивания</Text>
-                        <Text style={styles.metric}>0</Text>
+                        <Text style={styles.metric}>{downloadedCount ? downloadedCount : 0}</Text>
                     </View>
                 </View>
                 <View style={styles.likedBlockTitleContainer} />

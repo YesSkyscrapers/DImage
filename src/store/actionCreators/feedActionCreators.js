@@ -1,4 +1,5 @@
 import {
+    DOWNLOAD_POST,
     LIKE_POST,
     LOAD_FEED_PAGE,
     SEE_URL,
@@ -34,5 +35,11 @@ export const unlike_post = (url) => {
     return {
         type: UNLIKE_POST,
         payload: url
+    };
+};
+
+export const download_post = () => {
+    return {
+        type: DOWNLOAD_POST
     };
 };
