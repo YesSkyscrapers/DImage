@@ -28,6 +28,7 @@ import ProfileContainer from './components/screens/ProfileScreen/ProfileContaine
 import LoadingContainer from './components/screens/LoadingScreen/LoadingContainer';
 import FeedV2Container from './components/screens/FeedV2Screen/FeedV2Container';
 import { Actions, Router, Scene, Stack, Tabs } from 'react-native-router-flux';
+import NsfwListContainer from './components/screens/NsfwListScreen/NsfwListContainer';
 
 
 const backAndroidHandler = () => {
@@ -46,10 +47,12 @@ export default AppRouter = () => {
                 <Scene key="main" hideNavBar tabBarComponent={TabBar} tabs >
                     <Stack key="libraryTab" title="Библиотека" hideNavBar>
                         <Scene key="library" component={FeedV2Container} />
+                        <Scene key="nsfwList" component={NsfwListContainer} />
                     </Stack>
                     <Stack key="profileTab" title="Профиль" hideNavBar>
                         <Scene key="profile" component={ProfileContainer} />
-                        <Scene key="feedV2" component={FeedV2Container} />
+                        <Scene key="likedFeed" component={FeedV2Container} />
+                        <Scene key="nsfwList" component={NsfwListContainer} />
                     </Stack>
                     {/* <Stack key="searchTab" title="Поиск" icon={faSearch}>
                     <Scene key="search" component={SearchContainer} />

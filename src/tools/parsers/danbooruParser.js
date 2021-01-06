@@ -52,6 +52,28 @@ parser.getPostInfo = (html, url) => {
             postInfo.fullImageUrl = originalSizeLink.getAttribute("href")
         }
 
+        const tagsContainer = root.querySelector('#tag-list')
+        const artistTagsContainer = tagsContainer.querySelector('ul.artist-tag-list')
+        const artistTags = artistTagsContainer.querySelectorAll('li').map(element => element.getAttribute('data-tag-name'))
+        const copyrightsTagsContainer = tagsContainer.querySelector('ul.copyright-tag-list')
+        const copyrightsTags = copyrightsTagsContainer.querySelectorAll('li').map(element => element.getAttribute('data-tag-name'))
+        const charactersTagsContainer = tagsContainer.querySelector('ul.character-tag-list')
+        const charactersTags = charactersTagsContainer.querySelectorAll('li').map(element => element.getAttribute('data-tag-name'))
+        const generalTagsContainer = tagsContainer.querySelector('ul.general-tag-list')
+        const generalTags = generalTagsContainer.querySelectorAll('li').map(element => element.getAttribute('data-tag-name'))
+        const metaTagsContainer = tagsContainer.querySelector('ul.meta-tag-list')
+        const metaTags = metaTagsContainer.querySelectorAll('li').map(element => element.getAttribute('data-tag-name'))
+
+        postInfo.tags = {
+            artist: artistTags,
+            copyrights: copyrightsTags,
+            characters: charactersTags,
+            general: generalTags,
+            meta: metaTags
+        }
+
+
+
         return resolve(postInfo)
     })
 }

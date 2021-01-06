@@ -1,7 +1,9 @@
 import {
+    ADD_NSFW_TAG,
     DOWNLOAD_POST,
     LIKE_POST,
     LOAD_FEED_PAGE,
+    REMOVE_NSFW_TAG,
     SEE_URL,
     UNLIKE_POST
 } from "../constants/feedConstants";
@@ -41,5 +43,20 @@ export const unlike_post = (url) => {
 export const download_post = () => {
     return {
         type: DOWNLOAD_POST
+    };
+};
+
+export const add_nsfw_tag = (tag) => {
+    return {
+        type: ADD_NSFW_TAG,
+        payload: tag
+    };
+};
+
+
+export const remove_nsfw_tag = (tag) => {
+    return {
+        type: REMOVE_NSFW_TAG,
+        payload: tag
     };
 };

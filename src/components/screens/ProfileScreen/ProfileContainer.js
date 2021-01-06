@@ -99,7 +99,7 @@ class ProfileContainer extends React.PureComponent {
     onLikedImagePress = (item, index, array) => {
         this.isDownloadProcessActive = false
         this.props.toggleTabBar(false)
-        Actions.push("feedV2", {
+        Actions.push("likedFeed", {
             images: array,
             initialIndex: index,
             showButtons: false,
@@ -124,7 +124,7 @@ class ProfileContainer extends React.PureComponent {
     }
 
     onSettingsPress = () => {
-        crashlytics().crash();
+        Actions.push("nsfwList")
     }
 
     onFlatListLayout = event => {

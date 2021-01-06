@@ -6,11 +6,12 @@ import Image from '../../theme/Image';
 import colors from '../../theme/colors';
 import Button from '../../theme/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCheck, faHeart, faCheckSquare, faClipboardCheck, faCloudDownloadAlt, faDownload, faFileDownload, faSpellCheck, faArrowLeft, faStream } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faHeart, faCheckSquare, faClipboardCheck, faCloudDownloadAlt, faDownload, faFileDownload, faSpellCheck, faArrowLeft, faStream, faTags } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
 import { unlike_post, like_post } from '../../../store/actionCreators/feedActionCreators';
 import SafeArea from '../../theme/SafeArea';
 import moment from 'moment'
+import { Actions } from 'react-native-router-flux';
 
 const ANIMATION_MAX = 200;
 const SAVING_STATES = {
@@ -157,6 +158,12 @@ class LikeUI extends React.PureComponent {
         })
     }
 
+    onTagsPress = () => {
+        Actions.push("nsfwList", {
+            customTags: this.props.item.tags.artist.concat(this.props.item.tags.copyrights, this.props.item.tags.characters, this.props.item.tags.general, this.props.item.tags.meta)
+        });
+    }
+
 
     render() {
         return (
@@ -185,6 +192,9 @@ class LikeUI extends React.PureComponent {
                     </Button>
                     <Button style={styles.buttonContainer} onPress={this.onDownloadPress}>
                         <FontAwesomeIcon icon={this.getImageFromState(this.state.saved)} size={this.getSizeFromState(this.state.saved)} color={colors.white} />
+                    </Button>
+                    <Button style={styles.buttonContainer} onPress={this.onTagsPress}>
+                        <FontAwesomeIcon icon={faTags} size={30} color={colors.white} />
                     </Button>
                 </Animated.View>
                 {
