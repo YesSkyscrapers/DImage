@@ -20,6 +20,8 @@
 		7D02C23DC178515683B51054 /* libPods-DImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EF1C7C1D57AE5150FC5CF5 /* libPods-DImage.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		AEFD8EFDD15A2D6B37F06EEA /* libPods-DImage-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D670A0DC5D6652E24BF01184 /* libPods-DImage-tvOSTests.a */; };
+		C70605FA25A7577000FCC332 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C70605F925A7577000FCC332 /* Logo.png */; };
+		C706060025A757C100FCC332 /* Logo-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = C70605FF25A757C100FCC332 /* Logo-1024.png */; };
 		C7A9F5A725741AF3006F95B6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A9F5A625741AF2006F95B6 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,8 @@
 		A88D1CE5CA9B80F2F57E168B /* Pods-DImage-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DImage-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-DImage-tvOSTests/Pods-DImage-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		B081F25FC447C11222E3AA51 /* Pods-DImage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DImage.release.xcconfig"; path = "Target Support Files/Pods-DImage/Pods-DImage.release.xcconfig"; sourceTree = "<group>"; };
 		B34FB563CF02BD0F4F596C98 /* Pods-DImage-DImageTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DImage-DImageTests.debug.xcconfig"; path = "Target Support Files/Pods-DImage-DImageTests/Pods-DImage-DImageTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C70605F925A7577000FCC332 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		C70605FF25A757C100FCC332 /* Logo-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Logo-1024.png"; sourceTree = "<group>"; };
 		C7A9F5A625741AF2006F95B6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D670A0DC5D6652E24BF01184 /* libPods-DImage-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DImage-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -132,6 +136,8 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				C70605FF25A757C100FCC332 /* Logo-1024.png */,
+				C70605F925A7577000FCC332 /* Logo.png */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -345,6 +351,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C70605FA25A7577000FCC332 /* Logo.png in Resources */,
+				C706060025A757C100FCC332 /* Logo-1024.png in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C7A9F5A725741AF3006F95B6 /* GoogleService-Info.plist in Resources */,
