@@ -30,6 +30,7 @@ export default ProfileComponent = ({
     onScroll,
     showRow,
     onSettingsPress,
+    onTagsSettingsPress,
     onFlatListLayout,
     imageSizeStyle,
     downloadedCount,
@@ -45,7 +46,7 @@ export default ProfileComponent = ({
     return (
         <SafeArea safeStyle={styles.flexContainer}>
             <View style={styles.buttonsContainer}>
-                <Button onPress={onSettingsPress} style={styles.settingsContainer}>
+                <Button onLongPress={onTagsSettingsPress} onPress={onSettingsPress} style={styles.settingsContainer}>
                     <FontAwesomeIcon icon={faSlidersH} size={25} color={colors.white} />
                 </Button>
             </View>

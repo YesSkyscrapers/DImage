@@ -29,6 +29,7 @@ import LoadingContainer from './components/screens/LoadingScreen/LoadingContaine
 import FeedV2Container from './components/screens/FeedV2Screen/FeedV2Container';
 import { Actions, Router, Scene, Stack, Tabs } from 'react-native-router-flux';
 import NsfwListContainer from './components/screens/NsfwListScreen/NsfwListContainer';
+import SettingsContainer from './components/screens/SettingsScreen/SettingsContainer';
 
 
 const backAndroidHandler = () => {
@@ -53,6 +54,7 @@ export default AppRouter = () => {
                         <Scene key="profile" component={ProfileContainer} />
                         <Scene key="likedFeed" component={FeedV2Container} />
                         <Scene key="nsfwList" component={NsfwListContainer} />
+                        <Scene key="settings" component={SettingsContainer} />
                     </Stack>
                     {/* <Stack key="searchTab" title="Поиск" icon={faSearch}>
                     <Scene key="search" component={SearchContainer} />

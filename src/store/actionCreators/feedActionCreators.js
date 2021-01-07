@@ -5,6 +5,7 @@ import {
     LOAD_FEED_PAGE,
     REMOVE_NSFW_TAG,
     SEE_URL,
+    SWITCH_NSFW_FILTER,
     UNLIKE_POST
 } from "../constants/feedConstants";
 
@@ -57,6 +58,13 @@ export const add_nsfw_tag = (tag) => {
 export const remove_nsfw_tag = (tag) => {
     return {
         type: REMOVE_NSFW_TAG,
+        payload: tag
+    };
+};
+
+export const switch_nsfw_filter = (tag) => {
+    return {
+        type: SWITCH_NSFW_FILTER,
         payload: tag
     };
 };

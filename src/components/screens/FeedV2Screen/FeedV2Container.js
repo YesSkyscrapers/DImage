@@ -6,6 +6,8 @@ import { Actions } from 'react-native-router-flux';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
 import { loadFeed, loadFeedPost } from '../../../store/actions/feedActions';
 import { SKIP_PAGE } from '../../theme/List';
+import eventsService from '../../../tools/eventsService';
+import { FEED_DROP_EVENT } from '../../../store/constants/feedConstants'
 
 const HEADER_OFFSET = 500;
 const ACTIVE_IMAGES_COUNT = 5; // *2 + 1 (current + before + after)
@@ -31,10 +33,17 @@ class FeedV2Container extends React.PureComponent {
         this.loadComplete = false;
         this.page = 0;
         this.currentSceneName = null;
+        this.sessionId = 0;
     }
 
 
     componentDidMount() {
+        this.load()
+
+        this.subscribeToDrop()
+    }
+
+    load = () => {
         setTimeout(() => {
             this.currentSceneName = Actions.currentScene;
         }, 100);
@@ -59,6 +68,28 @@ class FeedV2Container extends React.PureComponent {
         if (this.state.activeSearchingProcess) {
             this.loadFirstPage()
         }
+    }
+
+    componentWillUnmount() {
+        if (!this.props.notUseSubscribeToDrop) {
+            eventsService.removeEventListener(FEED_DROP_EVENT, this.feedDrop)
+        }
+    }
+
+    subscribeToDrop = () => {
+        if (!this.props.notUseSubscribeToDrop) {
+            eventsService.addEventListener(FEED_DROP_EVENT, this.feedDrop)
+        }
+    }
+
+    feedDrop = () => {
+        this.sessionId++;
+        this.setState({
+            images: this.props.images || [],
+            activeIndex: this.props.initialIndex || 0,
+        }, () => {
+            this.load()
+        })
     }
 
     loadFirstPage = (page = 0) => {
@@ -97,12 +128,17 @@ class FeedV2Container extends React.PureComponent {
 
     getNewElements = () => {
 
+        const currentSessionId = this.sessionId
+
         if (this.loadActive || this.loadComplete) {
             return Promise.resolve();
         }
 
         this.loadActive = true;
         return this.props.loadFeed(this.page, this.usePrevDay).then(images => {
+            if (currentSessionId != this.sessionId) {
+                return null;
+            }
             if (this.page == 0 && images.length == 0 && !this.usePrevDay) {
                 this.usePrevDay = true;
                 return this.getNewElements(this.page)
@@ -124,14 +160,23 @@ class FeedV2Container extends React.PureComponent {
     }
 
     loadPostInfos = imageUrls => {
+        const currentSessionId = this.sessionId;
         return Promise.all(imageUrls.map(imageUrl => {
             return this.props.loadFeedPost(imageUrl).then(postInfo => {
                 return new Promise(resolve => {
-                    this.setState({
-                        images: this.state.images.concat([postInfo])
-                    }, () => {
+                    if (currentSessionId != this.sessionId) {
                         resolve()
-                    })
+                    } else {
+                        if (this.state.images.map(image => image.imageUrl).includes(postInfo.imageUrl)) {
+                            resolve()
+                        } else {
+                            this.setState({
+                                images: this.state.images.concat([postInfo])
+                            }, () => {
+                                resolve()
+                            })
+                        }
+                    }
                 })
             })
         }))

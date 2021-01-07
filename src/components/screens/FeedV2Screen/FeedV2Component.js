@@ -8,6 +8,7 @@ import {
     Dimensions,
     Text,
     Animated,
+    ActivityIndicator,
 } from 'react-native';
 import Button from '../../theme/Button';
 import colors from '../../theme/colors';
@@ -34,7 +35,15 @@ export default FeedV2Component = ({
                 snapToInterval={styles.dimensionsContainer.height}
                 onScroll={onScroll}
                 scrollEventThrottle={32}
+                contentContainerStyle={{
+                    flexGrow: 1
+                }}
             >
+                {
+                    images.length == 0 && (<View style={styles.loaderContainer}>
+                        <Text style={styles.loaderText}>Готовим контент для вас^^</Text>
+                    </View>)
+                }
                 {
                     images.map((image, index) => {
                         return (
@@ -106,4 +115,13 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0
     },
+    loaderContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    loaderText: {
+        fontSize: 17,
+        color: colors.white
+    }
 })

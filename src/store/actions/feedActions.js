@@ -44,7 +44,10 @@ export const loadFeedPost = (url) => {
         const postUrl = danbooruUrlCreator.getPostUrl(url)
         return getHtmlFromUrl(postUrl).then(html => {
             return danbooruParser.getPostInfo(html, postUrl).then(postInfo => {
-                return postInfo
+                return {
+                    ...postInfo,
+                    link: url
+                }
             })
         })
     }
@@ -61,11 +64,26 @@ export const loadFeed = (page, usePrevDay = false) => {
                 if (images.length == 0) {
                     return images //[]
                 } else {
-                    const uniqueImages = images.filter(image => !feed.sawImages.includes(image))
-                    if (uniqueImages.length == 0) {
+                    const uniqueImages = images.filter(image => !feed.sawImages.includes(image.link))
+
+                    const nsfwTags = getState().feed.nsfwTags
+                    const imageAfterFilter = uniqueImages.filter(image => {
+                        if (getState().feed.useNsfwFilter) {
+                            let isNsfw = false;
+                            image.tags.forEach(tag => {
+                                if (nsfwTags.includes(tag)) {
+                                    isNsfw = true
+                                }
+                            })
+                            return !isNsfw
+                        } else {
+                            return true;
+                        }
+                    })
+                    if (imageAfterFilter.length == 0) {
                         return SKIP_PAGE;
                     } else {
-                        return uniqueImages
+                        return imageAfterFilter.map(image => image.link)
                     }
                 }
             })
@@ -75,7 +93,7 @@ export const loadFeed = (page, usePrevDay = false) => {
 }
 
 
-
+//UNUSED NOW
 export const likeALotImages = (page = 0) => {
     return async (dispatch, getState) => {
         const feedDate = getFeedDate(true);
@@ -84,6 +102,7 @@ export const likeALotImages = (page = 0) => {
         return getHtmlFromUrl(popularPageUrl).then(html => {
             return danbooruParser.getImagesFromPopularPage(html).then(async images => {
 
+                images = images.map(info => info.link)
 
                 if (images.length == 0 || page > 15) {
                     console.log('end')

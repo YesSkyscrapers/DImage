@@ -105,6 +105,8 @@ class ProfileContainer extends React.PureComponent {
             showButtons: false,
             disableActiveSearchingProcess: true,
             showBackButton: true,
+            notUseSubscribeToDrop: true,
+            disableSawMarking: true
         })
     }
 
@@ -124,6 +126,10 @@ class ProfileContainer extends React.PureComponent {
     }
 
     onSettingsPress = () => {
+        Actions.push("settings")
+    }
+
+    onTagsSettingsPress = () => {
         Actions.push("nsfwList")
     }
 
@@ -150,6 +156,7 @@ class ProfileContainer extends React.PureComponent {
                     this.state.showRow + 5
                 ]}
                 onSettingsPress={this.onSettingsPress}
+                onTagsSettingsPress={this.onTagsSettingsPress}
                 onFlatListLayout={this.onFlatListLayout}
                 imageSizeStyle={this.imageSizeStyle}
                 downloadedCount={this.props.downloadedCount}

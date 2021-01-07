@@ -23,7 +23,7 @@ export default LoadingComponent = ({
 
     return (
         <SafeArea safeStyle={styles.flexContainer} style={styles.flexContainer}>
-            <Text style={styles.loader}>Здесь будет красивый лоадер)</Text>
+            <Text style={styles.loader}>Готовим все необхожимое :)</Text>
         </SafeArea>
     )
 }
@@ -35,9 +35,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.black,
         justifyContent: 'center',
-        alignItems: 'center'
     },
     loader: {
-        color: colors.white
+        alignSelf: 'center',
+        color: colors.white,
+        fontSize: 17
     }
 })

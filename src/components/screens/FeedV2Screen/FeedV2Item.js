@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { toggle_tabbar_visibility } from '../../../store/actionCreators/appActionCreators';
-import { saveFile } from '../../../store/actions/feedActions';
+import { saveFile, seeImage } from '../../../store/actions/feedActions';
 import colors from '../../theme/colors';
 import Image from '../../theme/Image';
 import LikeUI from './LikeUI';
@@ -21,12 +21,27 @@ class FeedV2Item extends React.PureComponent {
             showButtons: props.showButtons
         }
 
+        this.sawMark = false
     }
 
     componentDidMount() {
+        if (!this.props.showStub) {
+            this.markAsSaw()
+        }
     }
 
     componentWillUnmount() {
+    }
+
+    markAsSaw = () => {
+        this.sawMark = true;
+        this.props.seeImage(this.props.image.link)
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.showStub != prevProps.showStub && !this.sawMark && !this.props.showStub) {
+            this.markAsSaw()
+        }
     }
 
     onScreenTap = () => {
@@ -80,7 +95,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         toggleTabBar: (state) => dispatch(toggle_tabbar_visibility(state)),
-        downloadFile: item => dispatch(saveFile(item))
+        downloadFile: item => dispatch(saveFile(item)),
+        seeImage: image => dispatch(seeImage(image))
     };
 };
 
