@@ -30,6 +30,8 @@ import FeedV2Container from './components/screens/FeedV2Screen/FeedV2Container';
 import { Actions, Router, Scene, Stack, Tabs } from 'react-native-router-flux';
 import NsfwListContainer from './components/screens/NsfwListScreen/NsfwListContainer';
 import SettingsContainer from './components/screens/SettingsScreen/SettingsContainer';
+import { store } from './store/store';
+import { toggle_tabbar_visibility } from './store/actionCreators/appActionCreators';
 
 
 const backAndroidHandler = () => {
@@ -39,10 +41,16 @@ const backAndroidHandler = () => {
 };
 
 
+const onStateChange = e => {
+    if (Actions.currentScene == 'profile') {
+        store.dispatch(toggle_tabbar_visibility(true))
+    }
+}
+
 export default AppRouter = () => {
 
     return (
-        <Router backAndroidHandler={backAndroidHandler}>
+        <Router onStateChange={onStateChange} backAndroidHandler={backAndroidHandler}>
             <Stack key="_root" hideNavBar >
                 <Scene key="loading" component={LoadingContainer} />
                 <Scene key="main" hideNavBar tabBarComponent={TabBar} tabs >

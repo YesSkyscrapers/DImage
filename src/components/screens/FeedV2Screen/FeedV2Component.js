@@ -31,16 +31,18 @@ export default FeedV2Component = ({
         <View style={styles.container}>
             <ScrollView
                 ref={setScrollRef}
-                decelerationRate={"fast"}
+                decelerationRate={0.5}
                 snapToInterval={styles.dimensionsContainer.height}
+                disableIntervalMomentum={true}
                 onScroll={onScroll}
+                showsVerticalScrollIndicator={false}
                 scrollEventThrottle={32}
                 contentContainerStyle={{
                     flexGrow: 1
                 }}
             >
                 {
-                    images.length == 0 && (<View style={styles.loaderContainer}>
+                    images.length == 0 && (<View style={[styles.dimensionsContainer, styles.loaderContainer]}>
                         <Text style={styles.loaderText}>Готовим контент для вас^^</Text>
                     </View>)
                 }
@@ -56,6 +58,13 @@ export default FeedV2Component = ({
                             />
                         )
                     }
+                    )
+                }
+                {
+                    images.length > 0 && (
+                        <View style={[styles.dimensionsContainer, styles.loaderContainer]}>
+                            <ActivityIndicator size="large" color={colors.white} />
+                        </View>
                     )
                 }
             </ScrollView>
@@ -116,7 +125,6 @@ const styles = StyleSheet.create({
         right: 0
     },
     loaderContainer: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },

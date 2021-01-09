@@ -39,14 +39,14 @@ class FeedV2Container extends React.PureComponent {
 
     componentDidMount() {
         this.load()
-
+        setTimeout(() => {
+            this.currentSceneName = Actions.currentScene;
+        }, 100);
         this.subscribeToDrop()
     }
 
     load = () => {
-        setTimeout(() => {
-            this.currentSceneName = Actions.currentScene;
-        }, 100);
+
         if (this.props.initialIndex != undefined) {
             setTimeout(() => {
                 this.scrollRef.scrollTo({
@@ -152,6 +152,11 @@ class FeedV2Container extends React.PureComponent {
                         return this.loadPostInfos(images);
                     }
                 }
+
+                if (images.length == 1) {
+                    this.getNewElements();
+                }
+
                 return images
             }
         }).finally(() => {
@@ -184,6 +189,7 @@ class FeedV2Container extends React.PureComponent {
 
     onBackButtonPress = () => {
         Actions.pop();
+        this.props.toggleTabBar(true)
     }
 
     onScreenTap = () => {

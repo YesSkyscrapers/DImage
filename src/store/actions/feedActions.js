@@ -13,7 +13,7 @@ import CameraRoll from '@react-native-community/cameraroll'
 import { PROXY_URL } from '../../tools/fetch'
 
 const getFeedDate = (usePrevDay = false) => {
-    return moment().add(usePrevDay ? -2 : -1, "days").format('YYYY-MM-DD');
+    return moment().add(usePrevDay ? -3 : -2, "days").format('YYYY-MM-DD');
 }
 
 
@@ -153,7 +153,7 @@ const downloadFile = item => {
 
     return async (dispatch, getState) => {
         const useProxy = getState().app.useProxy
-        const url = item.fullImageUrl;
+        const url = item.fullImageUrl || item.imageUrl;
 
         return RNFetchBlob.config({
             fileCache: false
@@ -193,7 +193,6 @@ const saveFileInStorage = (base64) => {
                     if (Object.values(granted).filter(perm => perm != 'granted').length == 0) {
                         return RNFetchBlob.fs.createFile(`${imagePath}`, `${base64}`, 'base64')
                             .then(() => {
-                                console.log(123)
                                 //dispatch(show_success('Сохранено в галерее телефона'))
                                 return RNFetchBlob.fs.scanFile([{ path: `${imagePath}`, mime: 'image/png' }]).then(res => true);
                             })

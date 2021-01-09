@@ -85,5 +85,7 @@ export const NSFW_FILTER_DEFAULT = [
     "sitting_on_face",
     "sitting_on_person",
     "ahegao",
-    "absurdres"
+    "absurdres",
+    "panties",
+    "bare_shoulders",
 ]

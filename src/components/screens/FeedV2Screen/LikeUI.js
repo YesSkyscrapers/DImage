@@ -114,25 +114,31 @@ class LikeUI extends React.PureComponent {
     }
 
     onPress = event => {
-        const likePos = {
-            x: event.nativeEvent.pageX,
-            y: event.nativeEvent.pageY
-        }
+        this.props.onPress(event)
+        // const likePos = {
+        //     x: event.nativeEvent.pageX,
+        //     y: event.nativeEvent.pageY
+        // }
 
-        if (this.lastClickTime) {
-            clearTimeout(this.lastClickTimeout)
-            this.lastClickTime = undefined;
-            this.runLikeAnimation(likePos)
-            this.like(true);
-        } else {
-            this.lastClickTime = moment();
-            this.lastClickTimeout = setTimeout(() => {
-                this.lastClickTime = undefined;
-                this.props.onPress(event)
-            }, 600);
-        }
+        // console.log(likePos, this.lastClickTime)
+        // if (this.lastClickTime) {
+        //     clearTimeout(this.lastClickTimeout)
+        //     this.lastClickTime = undefined;
+        //     this.runLikeAnimation(likePos)
+        //     this.like(true);
+        // } else {
+        //     this.lastClickTime = moment();
+
+        //     console.log('settimeout')
+        //     this.lastClickTimeout = setTimeout(() => {
+        //         console.log('triggered')
+        //         this.lastClickTime = undefined;
+
+        //     }, 600);
+        // }
     }
 
+    //unused
     runLikeAnimation = likePos => {
         let animation = new Animated.Value(0)
         let likeAnimation = {
@@ -170,7 +176,7 @@ class LikeUI extends React.PureComponent {
             <Button
                 activeOpacity={1}
                 onPress={this.onPress}
-                style={styles.container}
+                style={styles.dimensionsContainer}
             >
                 {
                     React.Children.map(this.props.children, child => {
@@ -193,37 +199,7 @@ class LikeUI extends React.PureComponent {
                     <Button style={styles.buttonContainer} onPress={this.onDownloadPress}>
                         <FontAwesomeIcon icon={this.getImageFromState(this.state.saved)} size={this.getSizeFromState(this.state.saved)} color={colors.white} />
                     </Button>
-                    <Button style={styles.buttonContainer} onPress={this.onTagsPress}>
-                        <FontAwesomeIcon icon={faTags} size={30} color={colors.white} />
-                    </Button>
                 </Animated.View>
-                {
-                    this.state.likeAnimations.map(animation => {
-                        const opacity = animation.value.interpolate({
-                            inputRange: [0, 0.3, 1],
-                            outputRange: [0, 0.7, 0]
-                        })
-                        return (
-                            <Animated.View key={animation.id} style={{
-                                transform: [{
-                                    translateX: animation.x - 40
-                                }, {
-                                    translateY: animation.y - 40
-                                }, {
-                                    rotate: `${Math.round(animation.randomValue * 90 - 45)}deg`
-                                }],
-                                opacity: opacity,
-                                width: 80,
-                                height: 80,
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                            }}>
-                                <FontAwesomeIcon icon={faHeart} size={75} color={colors.red} />
-                            </Animated.View>
-                        )
-                    })
-                }
             </Button>
         )
     }
@@ -252,10 +228,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    dimensionsContainer: {
+        width: Dimensions.get('screen').width,
+        height: Dimensions.get('screen').height
+    },
     absoluteButtons: {
         position: 'absolute',
         right: 0,
-        bottom: Dimensions.get('screen').height * 0.44
+        bottom: Dimensions.get('screen').height * 0.40
     },
     buttonContainer: {
         width: Dimensions.get('screen').height * 0.07 + 5,

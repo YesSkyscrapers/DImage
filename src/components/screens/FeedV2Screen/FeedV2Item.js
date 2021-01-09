@@ -69,7 +69,7 @@ class FeedV2Item extends React.PureComponent {
                 >
                     {
                         this.props.showStub ? (
-                            <View style={[styles.container, styles.center]}>
+                            <View style={[styles.dimensionsContainer, styles.center]}>
                                 <ActivityIndicator size="large" color={colors.white} />
                             </View>
                         ) : (
