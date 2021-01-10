@@ -45,7 +45,7 @@ class FeedV2Container extends React.PureComponent {
         this.subscribeToDrop()
     }
 
-    load = () => {
+    load = (ignoreActiveLoad = false) => {
 
         if (this.props.initialIndex != undefined) {
             setTimeout(() => {
@@ -66,7 +66,7 @@ class FeedV2Container extends React.PureComponent {
             })
         }
         if (this.state.activeSearchingProcess) {
-            this.loadFirstPage()
+            this.loadFirstPage(0, ignoreActiveLoad)
         }
     }
 
@@ -84,18 +84,19 @@ class FeedV2Container extends React.PureComponent {
 
     feedDrop = () => {
         this.sessionId++;
+        this.loadComplete = false;
         this.setState({
             images: this.props.images || [],
             activeIndex: this.props.initialIndex || 0,
         }, () => {
-            this.load()
+            this.load(true)
         })
     }
 
-    loadFirstPage = (page = 0) => {
-        return this.getNewElements(page).then((result) => {
+    loadFirstPage = (page = 0, ignoreActiveLoad = false) => {
+        return this.getNewElements(page, ignoreActiveLoad).then((result) => {
             if (result == SKIP_PAGE) {
-                return this.loadFirstPage(page + 1)
+                return this.loadFirstPage(page + 1, ignoreActiveLoad)
             } else {
                 return result;
             }
@@ -126,14 +127,12 @@ class FeedV2Container extends React.PureComponent {
         }
     }
 
-    getNewElements = () => {
+    getNewElements = (stubr, ignoreActiveLoad = false) => {
 
         const currentSessionId = this.sessionId
-
-        if (this.loadActive || this.loadComplete) {
+        if ((!ignoreActiveLoad && this.loadActive) || this.loadComplete) {
             return Promise.resolve();
         }
-
         this.loadActive = true;
         return this.props.loadFeed(this.page, this.usePrevDay).then(images => {
             if (currentSessionId != this.sessionId) {
@@ -233,6 +232,7 @@ class FeedV2Container extends React.PureComponent {
                 headerOffset={this.state.headerOffset}
                 scrollReady={this.state.scrollReady}
                 showBackButton={this.state.showBackButton}
+                likedPost={this.props.likedPost}
             />
         )
     }
@@ -240,6 +240,7 @@ class FeedV2Container extends React.PureComponent {
 
 const mapStateToProps = state => {
     return {
+        likedPost: state.feed.likedPost.map(post => post.imageUrl) || []
     };
 };
 

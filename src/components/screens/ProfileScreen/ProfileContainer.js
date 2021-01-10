@@ -130,7 +130,9 @@ class ProfileContainer extends React.PureComponent {
     }
 
     onTagsSettingsPress = () => {
-        Actions.push("nsfwList")
+        //Actions.push("nsfwList")
+
+        Actions.push("settings")
     }
 
     onFlatListLayout = event => {

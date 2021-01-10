@@ -66,6 +66,7 @@ class FeedV2Item extends React.PureComponent {
                     onPress={this.onScreenTap}
                     onDownloadPress={this.onDownloadPress}
                     showButtons={this.props.showButtons}
+                    likedPost={this.props.likedPost}
                 >
                     {
                         this.props.showStub ? (

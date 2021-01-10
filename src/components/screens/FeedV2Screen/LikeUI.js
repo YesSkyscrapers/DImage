@@ -207,7 +207,6 @@ class LikeUI extends React.PureComponent {
 
 const mapStateToProps = state => {
     return {
-        likedPost: state.feed.likedPost.map(post => post.imageUrl) || []
     };
 };
 

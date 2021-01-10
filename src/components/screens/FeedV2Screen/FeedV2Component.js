@@ -26,12 +26,13 @@ export default FeedV2Component = ({
     headerOffset,
     scrollReady,
     showBackButton,
+    likedPost,
 }) => {
     return (
         <View style={styles.container}>
             <ScrollView
                 ref={setScrollRef}
-                decelerationRate={0.5}
+                decelerationRate={"fast"}
                 snapToInterval={styles.dimensionsContainer.height}
                 disableIntervalMomentum={true}
                 onScroll={onScroll}
@@ -40,6 +41,7 @@ export default FeedV2Component = ({
                 contentContainerStyle={{
                     flexGrow: 1
                 }}
+                pagingEnabled={true}
             >
                 {
                     images.length == 0 && (<View style={[styles.dimensionsContainer, styles.loaderContainer]}>
@@ -55,6 +57,7 @@ export default FeedV2Component = ({
                                 showButtons={showButtons}
                                 showStub={!checkIfShouldShow(index) || !scrollReady}
                                 image={image}
+                                likedPost={likedPost}
                             />
                         )
                     }
